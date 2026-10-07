@@ -1,0 +1,627 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Avinash Narode — Portfolio</title>
+    <link rel="icon" type="image/png" href="favicon.png">
+    <meta name="description" content="Avinash Narode — Web Developer & Designer. Portfolio showcasing projects, skills and contact." />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+  
+<style>
+/* Skills section — pill layout inspired by the provided reference */
+#skills .skills-showcase {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+  max-width: 100%;
+}
+
+#skills .skill-category {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+#skills .skill-category-title {
+  margin: 0;
+  color: #85809f;
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: 0.1px;
+}
+
+#skills .skill-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 12px;
+}
+
+#skills .skill-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 48px;
+  padding: 0 18px;
+  border: 1px solid rgba(255,255,255,0.10);
+  border-radius: 999px;
+  background: rgba(255,255,255,0.045);
+  color: #e8e6f0;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 1;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.025);
+  transition: transform .2s ease, background .2s ease, border-color .2s ease;
+}
+
+#skills .skill-pill:hover {
+  transform: translateY(-2px);
+  background: rgba(255,255,255,0.075);
+  border-color: rgba(255,255,255,0.18);
+}
+
+#skills .skill-pill img,
+#skills .skill-pill svg {
+  width: 20px;
+  height: 20px;
+  object-fit: contain;
+  flex: 0 0 20px;
+}
+
+@media (max-width: 600px) {
+  #skills .skill-pill {
+    min-height: 44px;
+    padding: 0 14px;
+    font-size: 14px;
+  }
+
+  #skills .skill-pill img,
+  #skills .skill-pill svg {
+    width: 18px;
+    height: 18px;
+    flex-basis: 18px;
+  }
+}
+</style>
+
+  
+<style>
+/* Clean technology orbit around the profile photo */
+.hero-card {
+  position: relative;
+  overflow: visible !important;
+}
+
+.hero-image-wrap {
+  position: relative;
+  z-index: 2;
+  overflow: visible !important;
+}
+
+.hero-tech-orbit {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 6;
+}
+
+.hero-tech {
+  position: absolute;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  height: 42px;
+  padding: 0 14px;
+  border: 1px solid rgba(255,255,255,.12);
+  border-radius: 999px;
+  background: rgba(13,14,25,.88);
+  color: #e9e7f2;
+  box-shadow: 0 8px 24px rgba(0,0,0,.30), inset 0 1px 0 rgba(255,255,255,.06);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 1;
+  white-space: nowrap;
+  animation: techFloat 5s ease-in-out infinite;
+}
+
+.hero-tech img,
+.hero-tech-icon {
+  width: 19px;
+  height: 19px;
+  object-fit: contain;
+  flex: 0 0 19px;
+}
+
+.hero-tech-icon.oracle {
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: #f80000;
+  color: #fff;
+  font-size: 10px;
+  font-weight: 800;
+}
+
+/* Positions are intentionally spaced so badges never touch or overlap. */
+.hero-tech:nth-child(1) { top: 2%; left: -8%; animation-delay: -.2s; }
+.hero-tech:nth-child(2) { top: 25%; left: -14%; animation-delay: -1.1s; }
+.hero-tech:nth-child(3) { top: 10%; right: -12%; animation-delay: -2s; }
+.hero-tech:nth-child(4) { bottom: 15%; left: -13%; animation-delay: -2.9s; }
+.hero-tech:nth-child(5) { bottom: 3%; right: -7%; animation-delay: -3.8s; }
+.hero-tech:nth-child(6) { bottom: 32%; right: -14%; animation-delay: -4.7s; }
+
+@keyframes techFloat {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-5px); }
+}
+
+@media (max-width: 900px) {
+  .hero-tech { height: 38px; padding: 0 11px; font-size: 12px; gap: 6px; }
+  .hero-tech img,
+  .hero-tech-icon { width: 17px; height: 17px; flex-basis: 17px; }
+}
+
+@media (max-width: 700px) {
+  .hero-tech-orbit { inset: 0; }
+  .hero-tech { height: 34px; padding: 0 9px; font-size: 10px; }
+  .hero-tech:nth-child(1) { top: 0; left: 0; }
+  .hero-tech:nth-child(2) { top: 24%; left: -3%; }
+  .hero-tech:nth-child(3) { top: 0; right: 0; }
+  .hero-tech:nth-child(4) { bottom: 17%; left: -2%; }
+  .hero-tech:nth-child(5) { bottom: 0; right: 0; }
+  .hero-tech:nth-child(6) { bottom: 31%; right: -2%; }
+}
+</style>
+
+  </head>
+  <body class="site-bg">
+    <header class="site-header">
+      <div class="container header-inner">
+        <a class="brand" href="#">Avinash Narode</a>
+        <nav class="nav" id="nav">
+          <a href="#about">About</a>
+          <a href="#experience">Experience</a>
+          <a href="#education">Education</a>
+          <a href="#projects">Projects</a>
+          <a href="#skills">Skills</a>
+          <a href="#contact">Contact</a>
+          <a href="#Additive Manufaturing Setup">Additive Manufaturing Setup</a>
+        </nav>
+        <div class="socials">
+          <a href="https://github.com/deepalibshinde2026-tech/Portfolio" aria-label="GitHub" title="GitHub" class="social-link social-link-icon">
+            <img src="https://cdn.simpleicons.org/github/FFFFFF" alt="" aria-hidden="true">
+            <span class="sr-only">GitHub</span>
+          </a>
+          <a href="https://www.linkedin.com/in/deepali-shinde-42130a62" aria-label="LinkedIn" title="LinkedIn" class="social-link social-link-icon">
+            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false" role="img">
+              <rect x="2" y="2" width="20" height="20" rx="5" fill="#0A66C2"></rect>
+              <path d="M7.2 9.1H9.9V17H7.2V9.1Zm1.35-3.6c.84 0 1.48.62 1.48 1.4 0 .81-.64 1.43-1.5 1.43-.83 0-1.47-.62-1.47-1.43 0-.78.64-1.4 1.49-1.4ZM11.9 9.1h2.6v1.08h.04c.36-.64 1.25-1.3 2.57-1.3 2.75 0 3.26 1.72 3.26 3.96V17h-2.72v-3.78c0-.9-.02-2.06-1.25-2.06-1.25 0-1.44.98-1.44 2V17H11.9V9.1Z" fill="#fff"></path>
+            </svg>
+            <span class="sr-only">LinkedIn</span>
+          </a>
+         
+          </a>
+        </div>
+        <button id="menuToggle" class="menu-toggle" aria-label="Toggle menu">☰</button>
+      </div>
+    </header>
+
+    <main>
+      <section class="hero">
+        <div class="container hero-grid">
+          <div class="hero-content">
+            <h1>Hi, I'm Avinash Narode</h1>
+            <p class="lead">Mechanical engineer with 7+ years of experience in CAD/PLM/ERP, product design, and manufacturing 
+              support. Experienced in 3D modelling, engineering drawings, concept generation, existing product improvement, 
+              product optimization, prototype development, and cross-functional communication. Currently seeking a role in a challenging engineering environment.
+
+            </p>
+              <p class="hero-sub">.Mechanical Design Engineer — Product Design — Manufacturing Support</p>
+              <div class="hero-badges">
+                  <span class="badge">Mechanical Design</span>
+                  <span class="badge">CAD</span>
+                  <span class="badge">3D Modelling</span>
+                  <span class="badge">NX</span>
+                  <span class="badge">Solid Edge</span>
+                  <span class="badge">SolidWorks</span>
+                  <span class="badge">PLM / PDM</span>
+                  <span class="badge">Teamcenter</span>
+                  <span class="badge">GD&T</span>
+                  <span class="badge">DFM / DFA</span>
+                  <span class="badge">Product Optimization</span>
+                  <span class="badge">Manufacturing</span>
+                </div>
+              <div class="hero-actions">
+                <a class="btn primary" href="#projects">See my work</a>
+                <a class="btn ghost" href="mailto:Avinashnarode26@gmail.com">Email</a>
+              </div>
+          </div>
+          <div class="hero-card">
+            <div class="hero-image-wrap">
+              <img id="heroImageBack" src="Avi.JPG" alt="Avinash Narode" class="hero-image hero-image-back" />
+              
+            </div>
+            <div class="hero-tech-orbit" aria-label="Engineering Technologies">
+  <span class="hero-tech">
+    <span class="hero-tech-icon">NX</span>Siemens NX
+  </span>
+
+  <span class="hero-tech">
+    <span class="hero-tech-icon">SE</span>Solid Edge
+  </span>
+
+  <span class="hero-tech">
+    <span class="hero-tech-icon">SW</span>SolidWorks
+  </span>
+
+  <span class="hero-tech">
+    <span class="hero-tech-icon">TC</span>Teamcenter
+  </span>
+
+  <span class="hero-tech">
+    <span class="hero-tech-icon">EN</span>ENOVIA
+  </span>
+
+  <span class="hero-tech">
+    <span class="hero-tech-icon">ERP</span>ERP
+  </span>
+</div>
+        </div>
+      </section>
+
+      <section id="about" class="section">
+        <div class="container">
+              <h2>About</h2>
+                <p>
+                    Mechanical Engineer with 7+ years of experience in product design, 
+                    CAD, PLM, ERP, and manufacturing support. Experienced in 3D modelling, 
+                    engineering drawings, concept development, product improvement, 
+                    optimization, and prototype development. Skilled in collaborating 
+                    with cross-functional teams to deliver practical and efficient 
+                    engineering solutions. Passionate about product development, 
+                    continuous improvement, and applying engineering knowledge to solve 
+                    real-world challenges.
+                  </p>
+          </div>
+        </section>
+
+      <section id="experience" class="section">
+  <div class="container">
+    <h2>Experience</h2>
+    <div class="grid">
+
+      <article class="card">
+        <h3>Master’s Thesis Student</h3>
+        <h3>Freudenberg e-Power Systems, Munich (Germany)</h3>
+        <p class="muted">Mar. 2025 – Mar. 2026</p>
+        <ul>
+          <li> - Worked on the development of an infrared camera-based optical testing instrument, starting with requirement understanding, followed by concept design for the fixture, gas infrastructure & safety cabin, and partial validation of the fixture and IR camera. </li>
+          <li> - Worked on SolidWorks CAD & FEA (Structural and thermal), Fixture design (Concept to prototype), Material selection, Design optimization, test rig layout and boundary condition definition. Performed system integration, testing for prototype.</li>  
+        </ul>
+      </article>
+
+      <article class="card">
+        <h3>Mechanical Engineer-2 CAD</h3>
+         <h3>Emerson Innovation Centre (EICP), Pune (India)</h3>
+        <p class="muted">Jul. 2021 – Aug. 2023</p>
+        <ul>
+          <li>Created/Modified 3D, assembly, drawings, managed data in NX, SolidWorks, ERP, Teamcenter and Enovia for RIDGID Tools and Daniel Measurement products</li>>
+          <li>Supported New product design, existing product improvement and cost-reduction activities through change notice/request (ECN/ECR).</li>
+          <li>Responsible for Fortus 450mc FDM to build prototypes for internal teams.</li>
+          <li>Contributed to sustaining projects and Teamcenter workflow development to reduce
+manual work and lead time for the team.</li>
+          <li>Experience on Concept generation in CAD, Part family, Reverse Engineering, Machining, Casting, Plastic, GD&T, PLM, BOM, Tolerance calculation, Cost reduction through design optimization and manufacturing process improvements, supplier visit, Coordinate with internal team and suppliers.</li>
+
+        </ul>
+      </article>
+
+      <article class="card">
+        <h3>Mechanical Engineer</h3>
+        <h3>Tech Mahindra Pvt Ltd, Pune (India)</h3>
+        <p class="muted">Aug. 2018 – Jun. 2021</p>
+        <ul>
+          <li> Supported the Transmission and Engine department for Navistar Trucks, focusing on new product design and sustaining activities.</li>
+          <li>Concept generation for part, Created/Modified 3D models, assemblies and drawings and managed data in NX CAD, Teamcenter, coral draw and Vis. Mockup.</li>
+          <li>Experienced in sheet-metal, casting, machining, stack-up calculation and packaging studies, data management tools, GD&T, production drawing, BOM updates, mechanical concept development, design for manufacturing, design optimization, data release in PLM systems, coordination with suppliers and international team
+          </li>
+        </ul>
+      </article>
+
+      <article class="card">
+        <h3>Project Engineer</h3>
+        <h3>Sanjeev Auto Parts Manufactures Private Limited, Aurangabad (India)</h3>
+        <p class="muted">Nov. 2017 – Aug. 2018</p>
+        <ul>
+          <li>Supported the end-to-end development of gears and shafts for ZF, from raw material to finished precision parts, including CAD modelling, manufacturing drawings, GD&T, and coordination with manufacturing and quality department.</li>
+          <li>Created drawings for CNC lathe and milling, hobbing, shaving, hard turning, laser marking, forging, Heat treatment and grinding operations for supplier/operator.</li>
+          <li>Performed product quality checks using vernier caliper, micrometer, plug/snap gauges, digital height gauges, profile tester and surface finish tester.</li>
+          <li>Worked on PPAP documentation, including Process FMEA, control plans, flow chart, and Tooling requirement such as gauges, fixtures, and locators.</li>
+          <li>Coordinated with internal and external teams and suppliers, including supplier visits.</li>
+        </ul>
+      </article>
+
+      <article class="card">
+        <h3>Consultant-CAD</h3>
+        <h3>Knowledge Podium Systems Private Limited, Dehradun (India)</h3>
+        <p class="muted">Jun. 2016 – Oct. 2017</p>
+        <ul>
+          <li>Created 3D models and assemblies in Solid Edge using part, surfacing, sheet-metal, harness, Mechanism concept generation and tubing modules.</li>
+          <li>Worked on concept development, product data management & reverse engineering.</li>
+        </ul>
+      </article>
+
+
+    </div>
+  </div>
+</section>
+
+      <section id="education" class="section">
+        <div class="container">
+          <h2>Education</h2>
+          <div class="grid">
+            <article class="card">
+              <h3>Master of Science (Hydrogen Technology)</h3>
+              <p class="muted">Rosenheim Technical University of Applied Science, Rosenheim, Germany  Oct. 2023 – Mar. 2026 </p>
+              <p>Master’s thesis: Development of an independent instrument for pinhole detection in PEM fuel-cell membranes for automotive applications.
+              </p>
+              <p>Project Thesis: Scaling of Reverse Mixing Based on CFD analysis (ANSYS Fluent)</p>
+            </article>
+
+            <article class="card">
+              <h3>Post Graduate Diploma (Tool Design & CAD/CAM)</h3>
+              <p class="muted">Indo German Tool Room, Aurangabad (India)  Jun. 2014 – Dec. 2015</p>
+              <p>Completed internship in precision machining and assembly department. (Operated CNC Lathe, 5/3 axis Milling, EDM, Wire EDM, Grinding, Drilling, Tapping)</p>
+              <p>Key module: Jig & fixture, press tool (Sheetmetal), mould (Plastic & Die casting), and gauges design, CAM programming, CATIA, Creo, AutoCAD.</p>
+            </article>
+
+            <article class="card">
+              <h3>Bachelor of Engineering (Mechanical)</h3>
+              <p class="muted">Shivaji University, Kolhapur, India  Jun. 2010 – May 2014</p>
+              <p>Major project: Process improvement through cycle time reduction in the casting foundry. (Wilo Mather and Platt Pumps Pvt. Ltd., Kolhapur).</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section id="skills" class="section">
+  <div class="container">
+    <h2>Skills</h2>
+
+    <div class="skills-showcase" aria-label="Engineering skills and tools">
+
+      <!-- ================= CAD & DESIGN TOOLS ================= -->
+      <div class="skill-category">
+        <h3 class="skill-category-title">CAD & Design Tools</h3>
+
+        <div class="skill-pills">
+
+          <div class="skill-pill">
+            <span class="skill-icon">NX</span>
+            <span>Siemens NX</span>
+          </div>
+
+          <div class="skill-pill">
+            <span class="skill-icon">SE</span>
+            <span>Solid Edge</span>
+          </div>
+
+          <div class="skill-pill">
+            <span class="skill-icon">SW</span>
+            <span>SolidWorks</span>
+          </div>
+
+          <div class="skill-pill">
+            <span class="skill-icon">3D</span>
+            <span>3D Modelling</span>
+          </div>
+
+          <div class="skill-pill">
+            <span class="skill-icon">ASM</span>
+            <span>Assembly Design</span>
+          </div>
+
+          <div class="skill-pill">
+            <span class="skill-icon">DRW</span>
+            <span>Engineering Drafting</span>
+          </div>
+
+        </div>
+      </div>
+
+
+      <!-- ================= PLM / PDM / ERP ================= -->
+      <div class="skill-category">
+        <h3 class="skill-category-title">PLM / PDM / ERP</h3>
+
+        <div class="skill-pills">
+
+          <div class="skill-pill">
+            <span class="skill-icon">TC</span>
+            <span>Teamcenter</span>
+          </div>
+
+          <div class="skill-pill">
+            <span class="skill-icon">EN</span>
+            <span>ENOVIA</span>
+          </div>
+
+          <div class="skill-pill">
+            <span class="skill-icon">JDE</span>
+            <span>JDE</span>
+          </div>
+
+          <div class="skill-pill">
+            <span class="skill-icon">PLM</span>
+            <span>PLM / PDM</span>
+          </div>
+
+          <div class="skill-pill">
+            <span class="skill-icon">ERP</span>
+            <span>ERP Systems</span>
+          </div>
+
+        </div>
+      </div>
+
+
+      <!-- ================= ENGINEERING & DESIGN ================= -->
+      <div class="skill-category">
+        <h3 class="skill-category-title">Engineering & Design</h3>
+
+        <div class="skill-pills">
+
+          <div class="skill-pill">
+            <span class="skill-icon">GD&T</span>
+            <span>GD&T</span>
+          </div>
+
+          <div class="skill-pill">
+            <span class="skill-icon">DFM</span>
+            <span>DFM / DFA</span>
+          </div>
+
+          <div class="skill-pill">
+            <span class="skill-icon">OPT</span>
+            <span>Design Optimization</span>
+          </div>
+
+          <div class="skill-pill">
+            <span class="skill-icon">CR</span>
+            <span>Cost Reduction</span>
+          </div>
+
+          <div class="skill-pill">
+            <span class="skill-icon">SA</span>
+            <span>Structural Analysis</span>
+          </div>
+
+          <div class="skill-pill">
+            <span class="skill-icon">PRO</span>
+            <span>Prototype Development</span>
+          </div>
+
+        </div>
+      </div>
+
+
+      <!-- ================= MANUFACTURING ================= -->
+      <div class="skill-category">
+        <h3 class="skill-category-title">Manufacturing & Processes</h3>
+
+        <div class="skill-pills">
+
+          <div class="skill-pill">
+            <span class="skill-icon">MCH</span>
+            <span>Machining</span>
+          </div>
+
+          <div class="skill-pill">
+            <span class="skill-icon">SM</span>
+            <span>Sheet Metal</span>
+          </div>
+
+          <div class="skill-pill">
+            <span class="skill-icon">PL</span>
+            <span>Plastic</span>
+          </div>
+
+          <div class="skill-pill">
+            <span class="skill-icon">CAST</span>
+            <span>Casting</span>
+          </div>
+
+          <div class="skill-pill">
+            <span class="skill-icon">FORG</span>
+            <span>Forging</span>
+          </div>
+
+          <div class="skill-pill">
+            <span class="skill-icon">AM</span>
+            <span>Additive Manufacturing</span>
+          </div>
+
+        </div>
+      </div>
+
+
+      <!-- ================= QUALITY & COLLABORATION ================= -->
+      <div class="skill-category">
+        <h3 class="skill-category-title">Quality & Collaboration</h3>
+
+        <div class="skill-pills">
+
+          <div class="skill-pill">
+            <span class="skill-icon">QI</span>
+            <span>Quality Inspection</span>
+          </div>
+
+          <div class="skill-pill">
+            <span class="skill-icon">PS</span>
+            <span>Process Support</span>
+          </div>
+
+          <div class="skill-pill">
+            <span class="skill-icon">DOC</span>
+            <span>Technical Documentation</span>
+          </div>
+
+          <div class="skill-pill">
+            <span class="skill-icon">SUP</span>
+            <span>Supplier Communication</span>
+          </div>
+
+          <div class="skill-pill">
+            <span class="skill-icon">TEAM</span>
+            <span>Cross-functional Coordination</span>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+
+      <section id="contact" class="section contact">
+        <div class="container">
+          <h2>Contact</h2>
+          <p>If you'd like to work together or have a question, send me a message using the form below or email me directly at <a href="mailto:Avinashnarode26@gmail.com">Avinashnarode26@gmail.com</a>.</p>
+          <form id="contactForm" class="contact-form" action="https://formspree.io/f/xppwvkql" method="POST">
+            <div class="field">
+              <label for="name">Name</label>
+              <input id="name" name="name" type="text" required placeholder="Your name">
+            </div>
+            <div class="field">
+              <label for="email">Email</label>
+              <input id="email" name="email" type="email" required placeholder="you@domain.com">
+            </div>
+            <div class="field">
+              <label for="message">Message</label>
+              <textarea id="message" name="message" rows="6" required placeholder="Brief message or project details"></textarea>
+            </div>
+            <div class="form-actions">
+              <button class="btn primary" type="submit">Send message</button>
+              <div id="formStatus" class="note" aria-live="polite"></div>
+            </div>
+          </form>
+        
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="container">
+      <p><span id="year"></span> Avinash Narode— Designed with precision. Built with care.</p>
+      </div>
+    </footer>
+
+    <script src="script.js"></script>
+  </body>
+</html>
