@@ -162,11 +162,3 @@ body{margin:0;font-family:Inter,system-ui,Segoe UI,Roboto,"Helvetica Neue",Arial
   .community-link{width:100%;text-align:center}
 }
 
-/* Temporarily disable floating technology labels */
-.hero-tech-orbit {
-  display: none !important;
-}
-
-.hero-tech {
-  animation: none !important;
-}
