@@ -157,3 +157,34 @@ body{margin:0;font-family:Inter,system-ui,Segoe UI,Roboto,"Helvetica Neue",Arial
   .community-card{flex-direction:column;align-items:flex-start}
   .community-link{width:100%;text-align:center}
 }
+
+/* Stop profile photo movement and make it square */
+.hero-image,
+.hero-image-back,
+.hero-image-front {
+    animation: none !important;
+    transform: none !important;
+    border-radius: 0 !important;
+}
+
+/* Keep the photo stationary */
+.hero-image {
+    position: relative;
+    width: 340px;
+    height: 340px;
+    object-fit: cover;
+    object-position: center;
+}
+
+/* Disable the second/background photo */
+.hero-image-back {
+    display: none !important;
+}
+
+/* Mobile screen */
+@media (max-width: 900px) {
+    .hero-image {
+        width: 200px;
+        height: 200px;
+    }
+}
