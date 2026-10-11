@@ -44,7 +44,7 @@ body{margin:0;font-family:Inter,system-ui,Segoe UI,Roboto,"Helvetica Neue",Arial
 .hero-content h1{font-size:clamp(36px,6vw,56px);margin:0 0 12px;line-height:1.02}
 .lead{color:var(--muted);max-width:62ch;font-size:1.0625rem}
 .hero-sub{color:var(--muted);margin-top:8px}
-.hero-badges{display:flex;gap:8px;margin-top:18px;flex-wrap:wrap}
+.hero-badges{display:none !important;}
 .badge{background:rgba(255,255,255,0.03);padding:8px 12px;border-radius:999px;color:var(--muted);font-weight:600;font-size:.92rem}
 .hero-actions{margin-top:18px;display:flex;gap:12px}
 .btn{display:inline-block;padding:12px 18px;border-radius:12px;background:transparent;color:var(--fg);text-decoration:none;border:1px solid rgba(255,255,255,0.06);font-weight:600}
@@ -53,9 +53,9 @@ body{margin:0;font-family:Inter,system-ui,Segoe UI,Roboto,"Helvetica Neue",Arial
 
 .hero-card{display:flex;align-items:center;justify-content:center}
 .card-shape{width:300px;height:300px;border-radius:24px;background:linear-gradient(135deg,rgba(110,231,183,0.12),rgba(96,173,246,0.08));box-shadow:var(--shadow);border:1px solid rgba(255,255,255,0.02)}
-.hero-image-wrap{position:relative;width:340px;height:340px;margin-left:-28px}
-.hero-image{width:340px;height:340px;border-radius:50%;object-fit:cover;object-position:20% 50%;border:6px solid rgba(255,255,255,0.06);box-shadow:var(--shadow);display:block}
-.hero-image-back{position:absolute;left:0;top:0;transform:translate(-24px,12px) scale(0.96);z-index:1;filter:brightness(0.96);border-radius:50%}
+.hero-image-wrap{position:relative;width:340px;height:340px;margin-left:0}
+.hero-image{width:340px;height:340px;border-radius:12px;object-fit:cover;object-position:center;border:6px solid rgba(255,255,255,0.06);box-shadow:var(--shadow);display:block}
+.hero-image-back{display: none;}
 .hero-image-front{position:relative;z-index:2}
 
 .section{padding:64px 0}
@@ -99,10 +99,6 @@ body{margin:0;font-family:Inter,system-ui,Segoe UI,Roboto,"Helvetica Neue",Arial
 .nav a{position:relative}
 .nav a::after{content:'';position:absolute;left:0;bottom:-6px;height:3px;width:0;background:linear-gradient(90deg,var(--accent),#60adf6);transition:width .28s}
 .nav a:hover::after{width:100%}
-
-/* Hero subtle motion */
-.hero-image{animation:float 6s ease-in-out infinite}
-@keyframes float{0%{transform:translateY(0) rotate(-2deg)}50%{transform:translateY(-10px) rotate(2deg)}100%{transform:translateY(0) rotate(-2deg)}}
 
 /* Reveal on scroll */
 .pre-reveal{opacity:0;transform:translateY(18px);transition:opacity .7s ease,transform .7s ease}
