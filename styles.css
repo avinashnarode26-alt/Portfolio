@@ -114,8 +114,16 @@ body{margin:0;font-family:Inter,system-ui,Segoe UI,Roboto,"Helvetica Neue",Arial
   .container{padding:20px}
   .hero-grid{grid-template-columns:1fr}
   .hero-image-wrap{width:200px;height:200px;margin-left:0}
-  .hero-image{width:200px;height:200px;object-position:50% 50%;border-radius:50%}
-  .hero-image-back{transform:translate(-12px,6px) scale(0.96)}
+ 
+  .hero-image{
+  width:200px;
+  height:200px;
+  object-fit:cover;
+  object-position:50% 50%;
+  border-radius:12px !important;
+  animation:none !important;
+  transform:none !important;}
+  .hero-image-back{display:none !important}
 }
 
 /* Project thumbnail and overlay */
