@@ -196,7 +196,33 @@ body{margin:0;font-family:Inter,system-ui,Segoe UI,Roboto,"Helvetica Neue",Arial
         height: 200px;
     }
 }
-/* Move profile photo slightly to the right */
+
+/* Reduce photo size and move it right */
 .hero-image-wrap {
-    transform: translateX(50px);
+    width: 280px !important;
+    height: 280px !important;
+    transform: translateX(500px);
+}
+
+.hero-image {
+    width: 280px !important;
+    height: 280px !important;
+    animation: none !important;
+    transform: none !important;
+    border-radius: 0 !important;
+    object-fit: cover;
+}
+
+/* Smaller photo on mobile */
+@media (max-width: 900px) {
+    .hero-image-wrap {
+        width: 200px !important;
+        height: 200px !important;
+        transform: translateX(15px);
+    }
+
+    .hero-image {
+        width: 200px !important;
+        height: 200px !important;
+    }
 }
