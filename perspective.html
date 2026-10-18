@@ -2,77 +2,258 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>My Perspective | Avinash Macchindra Narode</title>
-    <meta name="description" content="Professional experiences, engineering insights, lessons learned, and personal perspectives by Avinash Macchindra Narode.">
+  <title>My Perspective | Avinash Macchindra Narode</title>
+  <meta name="description" content="Articles, experiences, and ideas from Avinash Macchindra Narode.">
 
-    <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="styles.css">
 
-    <style>
-        .perspective-page {
-            max-width: 1000px;
-            margin: 0 auto;
-            padding: 60px 24px;
-            min-height: 80vh;
-        }
+  <style>
+    .perspective-page {
+      max-width: 1240px;
+      margin: auto;
+      padding: 50px 28px 80px;
+      color: #e5edf8;
+    }
 
-        .perspective-intro {
-            max-width: 750px;
-            margin-bottom: 40px;
-        }
+    .perspective-header {
+      margin-bottom: 30px;
+    }
 
-        .perspective-intro h1 {
-            font-size: clamp(2.2rem, 5vw, 3.5rem);
-            margin-bottom: 16px;
-        }
+    .perspective-header h1 {
+      font-size: clamp(2.5rem, 5vw, 3.5rem);
+      margin: 0 0 14px;
+    }
 
-        .article-card {
-            padding: 24px;
-            margin-bottom: 20px;
-            border: 1px solid rgba(255,255,255,0.1);
-            border-radius: 16px;
-            background: rgba(255,255,255,0.03);
-        }
+    .perspective-header p {
+      max-width: 700px;
+      color: #a9bfdc;
+      line-height: 1.7;
+      font-size: 1.08rem;
+    }
 
-        .article-card h2 {
-            margin-top: 0;
-        }
+    .article-card {
+      display: grid;
+      grid-template-columns: minmax(220px, 32%) 1fr;
+      gap: 30px;
+      align-items: stretch;
+      padding: 20px;
+      margin: 22px 0;
+      border: 1px solid #203047;
+      border-radius: 18px;
+      background: rgba(13, 27, 46, 0.65);
+    }
 
-        .article-card p {
-            line-height: 1.7;
-        }
+    .article-image {
+      min-height: 230px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 20px;
+      border: 1px solid #344761;
+      border-radius: 12px;
+      background: #1a2a40;
+      color: #a9bfdc;
+      overflow: hidden;
+    }
 
-        .back-home {
-            display: inline-block;
-            margin-bottom: 36px;
-        }
-    </style>
+    .article-image img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      min-height: 230px;
+      object-fit: cover;
+      border-radius: 8px;
+    }
+
+    .image-placeholder {
+      line-height: 1.8;
+    }
+
+    .article-number {
+      float: right;
+      padding: 6px 12px;
+      color: #5ee6b3;
+      background: rgba(94, 230, 179, 0.08);
+      border: 1px solid rgba(94, 230, 179, 0.15);
+      border-radius: 12px;
+      font-weight: 700;
+    }
+
+    .article-meta {
+      color: #a9bfdc;
+      font-size: 0.9rem;
+      margin: 2px 0 12px;
+    }
+
+    .article-content h2 {
+      font-size: 1.5rem;
+      line-height: 1.35;
+      margin: 0 0 14px;
+    }
+
+    .article-summary {
+      padding: 14px 18px;
+      border-radius: 14px;
+      background: #17273d;
+      margin-bottom: 14px;
+    }
+
+    .article-summary strong {
+      display: block;
+      margin-bottom: 4px;
+    }
+
+    .article-summary p,
+    .article-excerpt {
+      color: #b8cce5;
+      line-height: 1.65;
+      margin: 0;
+    }
+
+    .article-excerpt {
+      margin-bottom: 16px;
+    }
+
+    .read-article {
+      display: inline-block;
+      text-decoration: none;
+      color: #071426;
+      font-weight: 700;
+      padding: 13px 22px;
+      border-radius: 12px;
+      background: linear-gradient(100deg, #5ee6b3, #52b4ff);
+    }
+
+    .read-article:hover {
+      filter: brightness(1.08);
+    }
+
+    @media (max-width: 720px) {
+      .perspective-page {
+        padding: 35px 16px 60px;
+      }
+
+      .article-card {
+        grid-template-columns: 1fr;
+        gap: 20px;
+        padding: 15px;
+      }
+
+      .article-image {
+        min-height: 200px;
+      }
+
+      .article-content h2 {
+        font-size: 1.3rem;
+      }
+    }
+  </style>
 </head>
 
 <body>
-    <main class="perspective-page">
-        <a class="back-home" href="index.html">← Back to Portfolio</a>
 
-        <header class="perspective-intro">
-            <h1>My Perspective</h1>
-            <p>
-                My experiences, lessons learned, engineering ideas,
-                and thoughts on professional growth.
-            </p>
-        </header>
+  <!-- Keep your existing portfolio navigation here if desired -->
 
-        <section aria-label="Articles">
-            <article class="article-card">
-                <h2>Welcome to My Perspective</h2>
-                <p>
-                    This is where I share my experiences, observations,
-                    lessons learned, and ideas from my professional journey.
-                </p>
-                <p><em>More articles coming soon.</em></p>
-            </article>
-        </section>
-    </main>
+  <main class="perspective-page">
+
+    <header class="perspective-header">
+      <h1>My Perspective</h1>
+      <p>
+        Here I share my experiences, thoughts, and learnings related
+        to engineering, technology, and professional growth.
+      </p>
+    </header>
+
+    <!-- ARTICLE 1 -->
+    <article class="article-card">
+      <div class="article-image">
+        <!-- Upload an image and replace this placeholder with an img tag -->
+        <div class="image-placeholder">
+          <strong>Upload Image</strong><br>
+          Add your article image here
+        </div>
+      </div>
+
+      <div class="article-content">
+        <span class="article-number">01</span>
+        <p class="article-meta">Topic 1 · 5 min read</p>
+        <h2>Topic 1: Your Article Title Here</h2>
+
+        <div class="article-summary">
+          <strong>Summary</strong>
+          <p>Write a short summary of your article here in one or two sentences.</p>
+        </div>
+
+        <p class="article-excerpt">
+          This is a short introduction to your article. Replace this text
+          with a brief overview of the topic and your main idea.
+        </p>
+
+        <a class="read-article" href="article-1.html">Read article →</a>
+      </div>
+    </article>
+
+    <!-- ARTICLE 2 -->
+    <article class="article-card">
+      <div class="article-image">
+        <div class="image-placeholder">
+          <strong>Upload Image</strong><br>
+          Add your article image here
+        </div>
+      </div>
+
+      <div class="article-content">
+        <span class="article-number">02</span>
+        <p class="article-meta">Topic 2 · 5 min read</p>
+        <h2>Topic 2: Your Article Title Here</h2>
+
+        <div class="article-summary">
+          <strong>Summary</strong>
+          <p>Write a short summary of your second article here.</p>
+        </div>
+
+        <p class="article-excerpt">
+          Add one introductory paragraph explaining what this article
+          covers and why the topic matters to you.
+        </p>
+
+        <a class="read-article" href="article-2.html">Read article →</a>
+      </div>
+    </article>
+
+    <!-- ARTICLE 3 -->
+    <article class="article-card">
+      <div class="article-image">
+        <div class="image-placeholder">
+          <strong>Upload Image</strong><br>
+          Add your article image here
+        </div>
+      </div>
+
+      <div class="article-content">
+        <span class="article-number">03</span>
+        <p class="article-meta">Topic 3 · 5 min read</p>
+        <h2>Topic 3: Your Article Title Here</h2>
+
+        <div class="article-summary">
+          <strong>Summary</strong>
+          <p>Write a short summary of your third article here.</p>
+        </div>
+
+        <p class="article-excerpt">
+          Add a short introduction to your third article here. You can
+          replace this placeholder with your own perspective.
+        </p>
+
+        <a class="read-article" href="article-3.html">Read article →</a>
+      </div>
+    </article>
+
+  </main>
+
 </body>
 </html>
