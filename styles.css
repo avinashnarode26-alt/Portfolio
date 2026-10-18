@@ -196,3 +196,7 @@ body{margin:0;font-family:Inter,system-ui,Segoe UI,Roboto,"Helvetica Neue",Arial
         height: 200px;
     }
 }
+/* Move profile photo slightly to the right */
+.hero-image-wrap {
+    transform: translateX(50px);
+}
