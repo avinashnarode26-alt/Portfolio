@@ -41,3 +41,33 @@ document.addEventListener('DOMContentLoaded',function(){
 
   // Hero displays two stacked images; no JS needed for selection.
 });
+document.querySelectorAll(".project-link").forEach(link => {
+    link.addEventListener("click", event => {
+        event.preventDefault();
+
+        const image = link.closest(".project-card").querySelector("img");
+        const lightbox = document.getElementById("projectLightbox");
+        const enlargedImage = document.getElementById("lightboxImage");
+
+        enlargedImage.src = image.src;
+        enlargedImage.alt = image.alt;
+        lightbox.classList.add("active");
+        lightbox.setAttribute("aria-hidden", "false");
+    });
+});
+
+const lightbox = document.getElementById("projectLightbox");
+
+lightbox.querySelector(".lightbox-close").addEventListener("click", () => {
+    lightbox.classList.remove("active");
+    lightbox.setAttribute("aria-hidden", "true");
+    document.getElementById("lightboxImage").src = "";
+});
+
+lightbox.addEventListener("click", event => {
+    if (event.target === lightbox) {
+        lightbox.classList.remove("active");
+        lightbox.setAttribute("aria-hidden", "true");
+        document.getElementById("lightboxImage").src = "";
+    }
+});
