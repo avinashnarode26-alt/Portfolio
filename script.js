@@ -46,15 +46,14 @@ const lightbox = document.getElementById("projectLightbox");
 const enlargedImage = document.getElementById("lightboxImage");
 const closeButton = lightbox.querySelector(".lightbox-close");
 
-// Open enlarged image when clicking "View project"
 document.querySelectorAll(".project-link").forEach(link => {
     link.addEventListener("click", event => {
+        event.preventDefault();
+
         const card = link.closest(".project-card");
         const image = card?.querySelector("img");
 
-        if (!image) return;
-
-        event.preventDefault();
+        if (!image || !lightbox || !enlargedImage) return;
 
         enlargedImage.src = image.src;
         enlargedImage.alt = image.alt;
@@ -63,7 +62,6 @@ document.querySelectorAll(".project-link").forEach(link => {
     });
 });
 
-// Close the lightbox completely
 function closeLightbox() {
     lightbox.classList.remove("active");
     lightbox.setAttribute("aria-hidden", "true");
@@ -71,20 +69,14 @@ function closeLightbox() {
     enlargedImage.alt = "";
 }
 
-// Close button
 closeButton.addEventListener("click", closeLightbox);
 
-// Close by clicking the dark background
 lightbox.addEventListener("click", event => {
-    if (event.target === lightbox) {
-        closeLightbox();
-    }
+    if (event.target === lightbox) closeLightbox();
 });
 
-// Close with Escape key
 document.addEventListener("keydown", event => {
     if (event.key === "Escape" && lightbox.classList.contains("active")) {
         closeLightbox();
     }
 });
-
