@@ -1,4 +1,4 @@
-# Avinash Narode— Portfolio
+# Avinash M. Narode — Portfolio
 
 This is a minimal, responsive static portfolio template for Avinash Narode.
 
