@@ -311,6 +311,11 @@ body{margin:0;font-family:Inter,system-ui,Segoe UI,Roboto,"Helvetica Neue",Arial
     display: flex;
 }
 
+.project-lightbox:not(.active) {
+    display: none !important;
+}
+}
+
 .project-lightbox img {
     max-width: 95vw;
     max-height: 90vh;
