@@ -201,7 +201,7 @@ body{margin:0;font-family:Inter,system-ui,Segoe UI,Roboto,"Helvetica Neue",Arial
 .hero-image-wrap {
     width: 280px !important;
     height: 280px !important;
-    transform: translateX(500px);
+    transform: translateX(150px);
 }
 
 .hero-image {
