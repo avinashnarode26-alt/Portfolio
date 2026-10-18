@@ -176,9 +176,17 @@ body{margin:0;font-family:Inter,system-ui,Segoe UI,Roboto,"Helvetica Neue",Arial
     object-position: center;
 }
 
-/* Disable the second/background photo */
+/* Show the new profile photo */
 .hero-image-back {
-    display: none !important;
+    display: block !important;
+    position: relative !important;
+    width: 340px !important;
+    height: 340px !important;
+    border-radius: 0 !important;
+    animation: none !important;
+    transform: none !important;
+    object-fit: cover;
+    object-position: center;
 }
 
 /* Mobile screen */
