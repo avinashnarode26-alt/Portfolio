@@ -41,13 +41,20 @@ document.addEventListener('DOMContentLoaded',function(){
 
   // Hero displays two stacked images; no JS needed for selection.
 });
+
+const lightbox = document.getElementById("projectLightbox");
+const enlargedImage = document.getElementById("lightboxImage");
+const closeButton = lightbox.querySelector(".lightbox-close");
+
+// Open enlarged image when clicking "View project"
 document.querySelectorAll(".project-link").forEach(link => {
     link.addEventListener("click", event => {
-        event.preventDefault();
+        const card = link.closest(".project-card");
+        const image = card?.querySelector("img");
 
-        const image = link.closest(".project-card").querySelector("img");
-        const lightbox = document.getElementById("projectLightbox");
-        const enlargedImage = document.getElementById("lightboxImage");
+        if (!image) return;
+
+        event.preventDefault();
 
         enlargedImage.src = image.src;
         enlargedImage.alt = image.alt;
@@ -56,18 +63,28 @@ document.querySelectorAll(".project-link").forEach(link => {
     });
 });
 
-const lightbox = document.getElementById("projectLightbox");
-
-lightbox.querySelector(".lightbox-close").addEventListener("click", () => {
+// Close the lightbox completely
+function closeLightbox() {
     lightbox.classList.remove("active");
     lightbox.setAttribute("aria-hidden", "true");
-    document.getElementById("lightboxImage").src = "";
-});
+    enlargedImage.removeAttribute("src");
+    enlargedImage.alt = "";
+}
 
+// Close button
+closeButton.addEventListener("click", closeLightbox);
+
+// Close by clicking the dark background
 lightbox.addEventListener("click", event => {
     if (event.target === lightbox) {
-        lightbox.classList.remove("active");
-        lightbox.setAttribute("aria-hidden", "true");
-        document.getElementById("lightboxImage").src = "";
+        closeLightbox();
     }
 });
+
+// Close with Escape key
+document.addEventListener("keydown", event => {
+    if (event.key === "Escape" && lightbox.classList.contains("active")) {
+        closeLightbox();
+    }
+});
+
