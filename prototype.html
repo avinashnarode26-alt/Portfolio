@@ -202,6 +202,83 @@
             .am-panel { padding: 18px; }
             .am-full { grid-column: auto; }
         }
+        
+.cad-workspace {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: 24px;
+    align-items: start;
+    width: 100%;
+}
+
+.cad-controls {
+    min-width: 0;
+}
+
+.cad-preview-panel {
+    min-width: 0;
+    padding: 16px;
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    background: #ffffff;
+}
+
+.cad-preview-heading {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-bottom: 12px;
+}
+
+.cad-preview-heading h3 {
+    margin: 0;
+}
+
+.cad-preview-heading span {
+    color: var(--muted);
+    font-size: 12px;
+}
+
+#cadViewer {
+    position: relative;
+    width: 100%;
+    height: 380px;
+    overflow: hidden;
+    border-radius: 8px;
+    background: #f0f4f7;
+}
+
+#cadViewer canvas {
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+
+#cadViewerMessage {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: #667085;
+    padding: 16px;
+    pointer-events: none;
+}
+
+@media (max-width: 800px) {
+    .cad-workspace {
+        grid-template-columns: 1fr;
+    }
+
+    #cadViewer {
+        height: 320px;
+    }
+}
+
     </style>
 </head>
 
@@ -235,31 +312,52 @@
             an illustrative comparison using editable assumptions.
         </p>
 
-        <div class="am-grid">
-            <div class="am-field am-full">
-                
-<div class="am-field am-full">
-    <label for="cadFile">Upload CAD mesh (STL)</label>
-    <input id="cadFile" type="file" accept=".stl">
+        
+<div class="cad-workspace am-full">
 
-    <label for="modelUnits">STL model units</label>
-    <select id="modelUnits">
-        <option value="mm">Millimetres (mm)</option>
-        <option value="cm">Centimetres (cm)</option>
-        <option value="m">Metres (m)</option>
-        <option value="in">Inches (in)</option>
-    </select>
+    <div class="cad-controls">
+        <div class="am-field">
+            <label for="cadFile">Upload CAD mesh (STL)</label>
+            <input id="cadFile" type="file" accept=".stl">
 
-    <span class="am-note" id="fileStatus">
-        Upload an STL file to calculate its geometry.
-    </span>
+            <label for="modelUnits">STL model units</label>
+            <select id="modelUnits">
+                <option value="mm">Millimetres (mm)</option>
+                <option value="cm">Centimetres (cm)</option>
+                <option value="m">Metres (m)</option>
+                <option value="in">Inches (in)</option>
+            </select>
 
-    <div id="cadProperties" aria-live="polite">
-        <p>Volume, surface area and mass will appear here.</p>
+            <span class="am-note" id="fileStatus">
+                Upload an STL file to preview your model.
+            </span>
+        </div>
+
+        <div id="cadProperties" aria-live="polite">
+            <p>Volume, surface area and mass will appear here.</p>
+        </div>
     </div>
+
+    <div class="cad-preview-panel">
+        <div class="cad-preview-heading">
+            <h3>3D Model Preview</h3>
+            <span>Rotate · Zoom · Inspect</span>
+        </div>
+
+        <div id="cadViewer">
+            <div id="cadViewerMessage">
+                <div style="font-size:42px;">⬡</div>
+                <p>Upload an STL file to view your model</p>
+            </div>
+        </div>
+
+        <p class="am-note">
+            Drag to rotate · Scroll to zoom · Right-click drag to pan
+        </p>
+    </div>
+
 </div>
 
-            </div>
 
             <div class="am-field">
                 <label for="partMass">Finished part mass (kg)</label>
@@ -725,6 +823,164 @@ $("material").addEventListener("change", updateCADProperties);
 
     $("calculate").click();
 </script>
+
+<script type="module">
+import * as THREE from
+    "https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js";
+
+import { OrbitControls } from
+    "https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/controls/OrbitControls.js";
+
+import { STLLoader } from
+    "https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/loaders/STLLoader.js";
+
+const viewer = document.getElementById("cadViewer");
+const message = document.getElementById("cadViewerMessage");
+const fileInput = document.getElementById("cadFile");
+
+if (viewer && fileInput) {
+    const scene = new THREE.Scene();
+    scene.background = new THREE.Color("#f0f4f7");
+
+    const camera = new THREE.PerspectiveCamera(
+        45, 1, 0.01, 1000000
+    );
+
+    camera.position.set(2, 2, 3);
+
+    const renderer = new THREE.WebGLRenderer({
+        antialias: true,
+        alpha: false
+    });
+
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    renderer.outputColorSpace = THREE.SRGBColorSpace;
+    viewer.appendChild(renderer.domElement);
+
+    const controls = new OrbitControls(camera, renderer.domElement);
+    controls.enableDamping = true;
+    controls.dampingFactor = 0.07;
+
+    scene.add(new THREE.HemisphereLight(0xffffff, 0x778899, 2));
+
+    const light = new THREE.DirectionalLight(0xffffff, 2.5);
+    light.position.set(5, 8, 6);
+    scene.add(light);
+
+    const grid = new THREE.GridHelper(10, 10, 0xb6c4ce, 0xd8e0e6);
+    scene.add(grid);
+
+    let currentModel = null;
+
+    function resizeViewer() {
+        const width = viewer.clientWidth;
+        const height = viewer.clientHeight;
+
+        if (!width || !height) return;
+
+        camera.aspect = width / height;
+        camera.updateProjectionMatrix();
+        renderer.setSize(width, height);
+    }
+
+    const resizeObserver = new ResizeObserver(resizeViewer);
+    resizeObserver.observe(viewer);
+    resizeViewer();
+
+    fileInput.addEventListener("change", async () => {
+        const file = fileInput.files[0];
+        if (!file) return;
+
+        if (!file.name.toLowerCase().endsWith(".stl")) {
+            message.style.display = "flex";
+            message.textContent = "Please select an STL file.";
+            return;
+        }
+
+        message.style.display = "flex";
+        message.textContent = "Loading 3D model...";
+
+        try {
+            const buffer = await file.arrayBuffer();
+            const loader = new STLLoader();
+            const geometry = loader.parse(buffer);
+
+            geometry.computeVertexNormals();
+            geometry.computeBoundingBox();
+
+            if (!geometry.boundingBox ||
+                !Number.isFinite(geometry.boundingBox.min.x) ||
+                !Number.isFinite(geometry.boundingBox.max.x)) {
+                throw new Error("Invalid model geometry.");
+            }
+
+            if (currentModel) {
+                scene.remove(currentModel);
+                currentModel.geometry.dispose();
+                currentModel.material.dispose();
+            }
+
+            geometry.center();
+
+            const material = new THREE.MeshStandardMaterial({
+                color: "#16816c",
+                metalness: 0.15,
+                roughness: 0.55,
+                side: THREE.DoubleSide
+            });
+
+            currentModel = new THREE.Mesh(geometry, material);
+            scene.add(currentModel);
+
+            const sphere = new THREE.Sphere();
+            geometry.computeBoundingSphere();
+            geometry.boundingSphere.getBoundingSphere(sphere);
+
+            const radius = Math.max(sphere.radius, 0.001);
+            const distance = radius / Math.sin(
+                THREE.MathUtils.degToRad(camera.fov / 2)
+            );
+
+            camera.position.set(
+                distance * 0.8,
+                distance * 0.65,
+                distance * 1.1
+            );
+
+            camera.near = Math.max(radius / 1000, 0.0001);
+            camera.far = Math.max(distance * 10, radius * 10);
+            camera.updateProjectionMatrix();
+
+            controls.target.set(0, 0, 0);
+            controls.minDistance = radius * 0.1;
+            controls.maxDistance = radius * 20;
+            controls.update();
+
+            grid.position.y =
+                geometry.boundingBox.min.y - radius * 0.15;
+
+            message.style.display = "none";
+            resizeViewer();
+
+        } catch (error) {
+            message.style.display = "flex";
+            message.textContent =
+                "Could not display this STL file. Please try another file.";
+            console.error("STL preview error:", error);
+        }
+    });
+
+    function animate() {
+        requestAnimationFrame(animate);
+        controls.update();
+        renderer.render(scene, camera);
+    }
+
+    animate();
+}
+</script>
+
+    
 </body>
 </html>
 
