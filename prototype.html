@@ -237,12 +237,28 @@
 
         <div class="am-grid">
             <div class="am-field am-full">
-                <label for="cadFile">CAD model (STL, 3MF or STEP)</label>
-                <input id="cadFile" type="file"
-                    accept=".stl,.3mf,.step,.stp">
-                <span class="am-note" id="fileStatus">
-                    Demo only: selecting a file does not analyze its geometry.
-                </span>
+                
+<div class="am-field am-full">
+    <label for="cadFile">Upload CAD mesh (STL)</label>
+    <input id="cadFile" type="file" accept=".stl">
+
+    <label for="modelUnits">STL model units</label>
+    <select id="modelUnits">
+        <option value="mm">Millimetres (mm)</option>
+        <option value="cm">Centimetres (cm)</option>
+        <option value="m">Metres (m)</option>
+        <option value="in">Inches (in)</option>
+    </select>
+
+    <span class="am-note" id="fileStatus">
+        Upload an STL file to calculate its geometry.
+    </span>
+
+    <div id="cadProperties" aria-live="polite">
+        <p>Volume, surface area and mass will appear here.</p>
+    </div>
+</div>
+
             </div>
 
             <div class="am-field">
