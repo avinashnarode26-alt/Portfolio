@@ -1,1 +1,507 @@
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AM Sustainability | Avinash</title>
+    <meta name="description" content="Concept for comparing the estimated carbon footprint of additive manufacturing processes.">
+
+    <style>
+        :root {
+            --bg: #f5f7fa;
+            --card: #ffffff;
+            --text: #182230;
+            --muted: #667085;
+            --accent: #167d68;
+            --line: #dce3e9;
+        }
+
+        * { box-sizing: border-box; }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+        }
+
+        .am-wrap {
+            max-width: 1120px;
+            margin: auto;
+            padding: 36px 22px 70px;
+        }
+
+        .am-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+            flex-wrap: wrap;
+            margin-bottom: 45px;
+        }
+
+        .am-brand { font-weight: 700; font-size: 18px; }
+        .am-tag {
+            color: var(--accent);
+            background: #e0f4ed;
+            border-radius: 30px;
+            padding: 8px 13px;
+            font-size: 12px;
+        }
+
+        .am-hero {
+            padding: 35px 0 45px;
+            max-width: 820px;
+        }
+
+        .am-hero h1 {
+            font-size: clamp(36px, 6vw, 62px);
+            line-height: 1.08;
+            margin: 18px 0;
+            letter-spacing: -1.5px;
+        }
+
+        .am-hero p, .am-section-intro {
+            line-height: 1.8;
+            color: var(--muted);
+            font-size: 16px;
+        }
+
+        .am-eyebrow {
+            color: var(--accent);
+            font-size: 12px;
+            letter-spacing: 1.5px;
+            font-weight: 700;
+        }
+
+        .am-panel {
+            background: var(--card);
+            border: 1px solid var(--line);
+            border-radius: 16px;
+            padding: 26px;
+            margin-top: 24px;
+        }
+
+        .am-panel h2 { margin-top: 0; }
+
+        .am-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 18px;
+        }
+
+        .am-field {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .am-field label {
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .am-field input, .am-field select {
+            width: 100%;
+            min-width: 0;
+            padding: 12px;
+            border: 1px solid #cbd5e1;
+            border-radius: 8px;
+            background: white;
+            font: inherit;
+        }
+
+        .am-full { grid-column: 1 / -1; }
+
+        .am-button {
+            border: 0;
+            border-radius: 8px;
+            padding: 13px 20px;
+            background: var(--accent);
+            color: white;
+            font-weight: 700;
+            font-size: 15px;
+            cursor: pointer;
+        }
+
+        .am-button:hover { filter: brightness(.94); }
+
+        .am-results {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 15px;
+            margin-top: 22px;
+        }
+
+        .am-result {
+            padding: 20px;
+            border: 1px solid var(--line);
+            border-radius: 12px;
+            background: white;
+        }
+
+        .am-result.best {
+            border: 2px solid var(--accent);
+            background: #f0faf6;
+        }
+
+        .am-result h3 { margin: 0 0 12px; }
+        .am-number { font-size: 27px; font-weight: 700; margin: 8px 0; }
+        .am-unit { font-size: 12px; color: var(--muted); }
+        .am-breakdown { font-size: 13px; line-height: 1.8; color: var(--muted); }
+
+        .am-bar {
+            height: 8px;
+            background: #e5eaf0;
+            border-radius: 20px;
+            overflow: hidden;
+            margin: 14px 0;
+        }
+
+        .am-bar span {
+            display: block;
+            height: 100%;
+            width: 0;
+            background: var(--accent);
+        }
+
+        .am-note {
+            color: var(--muted);
+            font-size: 13px;
+            line-height: 1.7;
+        }
+
+        .am-section { margin-top: 55px; }
+
+        .am-steps {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 16px;
+        }
+
+        .am-step {
+            border: 1px solid var(--line);
+            border-radius: 12px;
+            padding: 22px;
+            background: white;
+        }
+
+        .am-footer {
+            margin-top: 55px;
+            padding-top: 22px;
+            border-top: 1px solid var(--line);
+            color: var(--muted);
+            font-size: 13px;
+        }
+
+        @media(max-width: 700px) {
+            .am-grid, .am-results, .am-steps {
+                grid-template-columns: 1fr;
+            }
+            .am-panel { padding: 18px; }
+            .am-full { grid-column: auto; }
+        }
+    </style>
+</head>
+
+<body>
+<main class="am-wrap">
+
+    <header class="am-top">
+        <div class="am-brand">AM Sustainability</div>
+        <span class="am-tag">ENGINEERING CONCEPT · PROTOTYPE</span>
+    </header>
+
+    <section class="am-hero">
+        <div class="am-eyebrow">SUSTAINABLE ADDITIVE MANUFACTURING</div>
+
+        <h1>Better parts.<br>Lower carbon.</h1>
+
+        <p>
+            What if engineers could compare the environmental impact
+            of different additive manufacturing processes before
+            printing a component? This concept explores a data-driven
+            approach to estimating carbon emissions from materials,
+            electricity, manufacturing waste and transportation.
+        </p>
+    </section>
+
+    <section class="am-panel">
+        <h2>Explore the carbon footprint</h2>
+        <p class="am-section-intro">
+            Select a CAD file and enter the same part requirements
+            for each manufacturing method. The calculator provides
+            an illustrative comparison using editable assumptions.
+        </p>
+
+        <div class="am-grid">
+            <div class="am-field am-full">
+                <label for="cadFile">CAD model (STL, 3MF or STEP)</label>
+                <input id="cadFile" type="file"
+                    accept=".stl,.3mf,.step,.stp">
+                <span class="am-note" id="fileStatus">
+                    Demo only: selecting a file does not analyze its geometry.
+                </span>
+            </div>
+
+            <div class="am-field">
+                <label for="partMass">Finished part mass (kg)</label>
+                <input id="partMass" type="number" min="0.001"
+                    step="0.001" value="0.25" required>
+            </div>
+
+            <div class="am-field">
+                <label for="material">Material</label>
+                <select id="material">
+                    <option value="3">PLA plastic</option>
+                    <option value="4">ABS plastic</option>
+                    <option value="6">PA12 nylon</option>
+                    <option value="25">Aluminium alloy powder</option>
+                </select>
+                <span class="am-note">
+                    Illustrative material factors, kg CO₂e/kg.
+                </span>
+            </div>
+
+            <div class="am-field">
+                <label for="gridFactor">Electricity carbon intensity (kg CO₂e/kWh)</label>
+                <input id="gridFactor" type="number" min="0"
+                    step="0.01" value="0.35">
+            </div>
+
+            <div class="am-field">
+                <label for="distance">Supplier-to-user distance (km)</label>
+                <input id="distance" type="number" min="0"
+                    step="1" value="250">
+            </div>
+
+            <div class="am-field">
+                <label for="transportFactor">Transport factor (kg CO₂e/tonne-km)</label>
+                <input id="transportFactor" type="number" min="0"
+                    step="0.001" value="0.1">
+            </div>
+
+            <div class="am-field">
+                <label for="materialUse">Total material consumed / finished mass</label>
+                <input id="materialUse" type="number" min="1"
+                    step="0.1" value="1.2">
+                <span class="am-note">
+                    Includes a simplified allowance for supports and waste.
+                </span>
+            </div>
+
+            <div class="am-field">
+                <label for="postEnergy">Post-processing energy (kWh/part)</label>
+                <input id="postEnergy" type="number" min="0"
+                    step="0.1" value="0.2">
+            </div>
+
+            <div class="am-field am-full">
+                <button class="am-button" id="calculate" type="button">
+                    Compare manufacturing methods
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <section class="am-section" aria-live="polite">
+        <h2>Estimated emissions comparison</h2>
+        <p class="am-section-intro">
+            Lower estimates are shown first. All process energy values
+            below are illustrative demo inputs, not validated machine data.
+        </p>
+
+        <div id="results" class="am-results">
+            <p>Enter your assumptions and select Compare to calculate results.</p>
+        </div>
+
+        <p class="am-note" id="resultNote">
+            Results represent a simplified estimate, not a verified
+            life-cycle assessment (LCA).
+        </p>
+    </section>
+
+    <section class="am-section">
+        <h2>What does the calculation consider?</h2>
+
+        <div class="am-steps">
+            <article class="am-step">
+                <h3>01 · Material</h3>
+                <p class="am-note">
+                    Raw material production, consumed material and
+                    a simplified allowance for manufacturing waste.
+                </p>
+            </article>
+
+            <article class="am-step">
+                <h3>02 · Manufacturing</h3>
+                <p class="am-note">
+                    Electricity consumed during printing and
+                    post-processing, multiplied by the selected
+                    electricity carbon intensity.
+                </p>
+            </article>
+
+            <article class="am-step">
+                <h3>03 · Transportation</h3>
+                <p class="am-note">
+                    A simplified estimate based on the mass transported,
+                    distance and transport emission factor.
+                </p>
+            </article>
+        </div>
+    </section>
+
+    <section class="am-section">
+        <h2>From concept to engineering tool</h2>
+        <p class="am-section-intro">
+            The future application could extract geometry from uploaded
+            CAD models, estimate build orientation and support material,
+            use measured machine energy data, compare supplier locations,
+            and produce a transparent report for each manufacturing option.
+        </p>
+    </section>
+
+    <footer class="am-footer">
+        AM Sustainability — an independent engineering concept by Avinash.
+        Demo results are illustrative and should not be used for
+        procurement or environmental claims.
+    </footer>
+</main>
+
+<script>
+    /*
+      DEMO DATA ONLY.
+      Replace process energy values and material factors with
+      documented, machine-specific and region-specific data before
+      using the results for real decisions.
+    */
+
+    const processes = [
+        { name: "FDM", energy: 0.8, waste: 0.05 },
+        { name: "SLA", energy: 1.8, waste: 0.10 },
+        { name: "SLS", energy: 3.5, waste: 0.15 },
+        { name: "Metal AM", energy: 12.0, waste: 0.20 }
+    ];
+
+    const $ = id => document.getElementById(id);
+
+    $("cadFile").addEventListener("change", function () {
+        const file = this.files[0];
+        $("fileStatus").textContent = file
+            ? file.name + " selected. Geometry is not analyzed in this demo."
+            : "Demo only: selecting a file does not analyze its geometry.";
+    });
+
+    $("calculate").addEventListener("click", function () {
+        const mass = Number($("partMass").value);
+        const materialFactor = Number($("material").value);
+        const grid = Number($("gridFactor").value);
+        const distance = Number($("distance").value);
+        const transportFactor = Number($("transportFactor").value);
+        const materialUse = Number($("materialUse").value);
+        const postEnergy = Number($("postEnergy").value);
+
+        const inputs = [
+            mass, materialFactor, grid, distance,
+            transportFactor, materialUse, postEnergy
+        ];
+
+        if (!inputs.every(Number.isFinite) ||
+            mass <= 0 || materialFactor < 0 || grid < 0 ||
+            distance < 0 || transportFactor < 0 ||
+            materialUse < 1 || postEnergy < 0) {
+            $("results").textContent =
+                "Please enter valid values. Mass must be positive, material use must be at least 1, and other inputs cannot be negative.";
+            return;
+        }
+
+        const results = processes.map(process => {
+            const materialMass =
+                mass * materialUse * (1 + process.waste);
+
+            const materialCO2 = materialMass * materialFactor;
+            const printCO2 = process.energy * grid;
+            const postCO2 = postEnergy * grid;
+
+            // kg transported × km × kg CO2e/tonne-km ÷ 1000
+            const transportCO2 =
+                mass * distance * transportFactor / 1000;
+
+            const total =
+                materialCO2 + printCO2 + postCO2 + transportCO2;
+
+            return {
+                name: process.name,
+                materialCO2,
+                printCO2,
+                postCO2,
+                transportCO2,
+                total
+            };
+        }).sort((a, b) => a.total - b.total);
+
+        const best = results[0].total;
+        const largest = Math.max(...results.map(r => r.total), 0.001);
+
+        $("results").replaceChildren();
+
+        results.forEach((result, index) => {
+            const card = document.createElement("article");
+            card.className = "am-result" + (index === 0 ? " best" : "");
+
+            const heading = document.createElement("h3");
+            heading.textContent = result.name +
+                (index === 0 ? " · Lowest estimate" : "");
+
+            const total = document.createElement("div");
+            total.className = "am-number";
+            total.textContent = result.total.toFixed(3);
+
+            const unit = document.createElement("div");
+            unit.className = "am-unit";
+            unit.textContent = "kg CO₂e per part (estimate)";
+
+            const bar = document.createElement("div");
+            bar.className = "am-bar";
+            const fill = document.createElement("span");
+            fill.style.width = (result.total / largest * 100) + "%";
+            bar.appendChild(fill);
+
+            const details = document.createElement("div");
+            details.className = "am-breakdown";
+            details.textContent =
+                "Material: " + result.materialCO2.toFixed(3) +
+                " kg CO₂e\n" +
+                "Printing: " + result.printCO2.toFixed(3) +
+                " kg CO₂e\n" +
+                "Post-processing: " + result.postCO2.toFixed(3) +
+                " kg CO₂e\n" +
+                "Transport: " + result.transportCO2.toFixed(3) +
+                " kg CO₂e";
+
+            details.style.whiteSpace = "pre-line";
+
+            card.append(heading, total, unit, bar, details);
+            $("results").appendChild(card);
+        });
+
+        const saving = results.length > 1 && results[results.length - 1].total > 0
+            ? (100 * (results[results.length - 1].total - best) /
+               results[results.length - 1].total)
+            : 0;
+
+        $("resultNote").textContent =
+            "In this illustrative scenario, " + results[0].name +
+            " has the lowest estimated footprint. The difference between " +
+            "the lowest and highest estimates is " + saving.toFixed(1) +
+            "%. These rankings depend on the demo assumptions and are not " +
+            "evidence that one process is always more sustainable.";
+    });
+
+    $("calculate").click();
+</script>
+</body>
+</html>
+
