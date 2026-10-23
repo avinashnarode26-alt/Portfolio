@@ -1,1 +1,310 @@
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lost & Found QR | Avinash</title>
+    <meta name="description" content="A QR-based Lost and Found concept designed to help people return lost belongings while protecting privacy.">
+    <link rel="stylesheet" href="styles.css">
+
+    <style>
+        .lf-page {
+            max-width: 1050px;
+            margin: auto;
+            padding: 45px 24px 70px;
+        }
+
+        .lf-hero {
+            display: grid;
+            grid-template-columns: 1.5fr 1fr;
+            gap: 40px;
+            align-items: center;
+            padding: 45px 0 65px;
+        }
+
+        .lf-eyebrow {
+            display: inline-block;
+            border: 1px solid #cbd5e1;
+            border-radius: 30px;
+            padding: 7px 13px;
+            font-size: 13px;
+            margin-bottom: 18px;
+        }
+
+        .lf-hero h1 {
+            font-size: clamp(36px, 5vw, 58px);
+            line-height: 1.1;
+            margin: 0 0 20px;
+        }
+
+        .lf-hero p, .lf-section p {
+            line-height: 1.8;
+        }
+
+        .lf-hero p {
+            max-width: 610px;
+        }
+
+        .lf-button {
+            display: inline-block;
+            padding: 12px 19px;
+            background: #2563eb;
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            margin-top: 12px;
+        }
+
+        .lf-qr-card {
+            text-align: center;
+            border: 1px solid #d1d5db;
+            border-radius: 20px;
+            padding: 28px;
+        }
+
+        .lf-qr-card img {
+            display: block;
+            width: 190px;
+            max-width: 100%;
+            margin: 15px auto;
+        }
+
+        .lf-small {
+            font-size: 13px;
+            opacity: 0.75;
+        }
+
+        .lf-section {
+            margin-top: 45px;
+        }
+
+        .lf-section h2 {
+            font-size: clamp(25px, 3vw, 34px);
+            margin-bottom: 12px;
+        }
+
+        .lf-grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 18px;
+            margin-top: 24px;
+        }
+
+        .lf-card {
+            border: 1px solid #d1d5db;
+            border-radius: 14px;
+            padding: 23px;
+        }
+
+        .lf-number {
+            font-size: 13px;
+            opacity: 0.7;
+        }
+
+        .lf-card h3 {
+            margin-bottom: 8px;
+        }
+
+        .lf-callout {
+            border-left: 4px solid #2563eb;
+            padding: 12px 20px;
+            margin-top: 25px;
+        }
+
+        .lf-footer {
+            border-top: 1px solid #d1d5db;
+            margin-top: 60px;
+            padding-top: 22px;
+            font-size: 13px;
+            opacity: 0.8;
+        }
+
+        @media (max-width: 700px) {
+            .lf-hero {
+                grid-template-columns: 1fr;
+                gap: 25px;
+                padding-top: 20px;
+            }
+
+            .lf-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .lf-page {
+                padding-left: 18px;
+                padding-right: 18px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+<main class="lf-page">
+
+    <section class="lf-hero">
+        <div>
+            <span class="lf-eyebrow">PERSONAL INNOVATION CONCEPT</span>
+
+            <h1>Lost something?<br>Help it find its way home.</h1>
+
+            <p>
+                Imagine if your keys, bag or luggage could speak for you.
+                A small QR code could connect a person who finds your
+                belongings with you — without revealing your private
+                contact details.
+            </p>
+
+            <a href="#how-it-works" class="lf-button">
+                Explore the concept ↓
+            </a>
+        </div>
+
+        <div class="lf-qr-card">
+            <h3>One scan could make a difference.</h3>
+
+            <img
+                src="https://api.qrserver.com/v1/create-qr-code/?size=220x220&data=https%3A%2F%2Fwww.avinashnorade.com%2Fbarcode.html"
+                alt="Demonstration QR code linking to the Lost and Found concept page">
+
+            <p><strong>Scan. Connect. Return.</strong></p>
+
+            <p class="lf-small">
+                Demonstration QR code — not linked to a registered item
+                or an owner's private contact details.
+            </p>
+        </div>
+    </section>
+
+    <section class="lf-section">
+        <h2>The problem</h2>
+        <p>
+            Losing everyday belongings is frustrating. Finding them
+            does not always solve the problem: the person who finds
+            an item may have no way to identify or contact its owner.
+            Sometimes a useful item is never returned simply because
+            the connection is missing.
+        </p>
+    </section>
+
+    <section class="lf-section">
+        <h2>The idea</h2>
+        <p>
+            Give every registered belonging a unique QR code.
+            When someone scans it, a dedicated webpage explains
+            how to contact the owner and return the item.
+        </p>
+
+        <div class="lf-grid">
+            <article class="lf-card">
+                <div class="lf-number">01 / IDENTIFY</div>
+                <h3>A unique QR code</h3>
+                <p>
+                    Place a QR label on keys, bags, luggage or other
+                    suitable belongings. Each code identifies one item.
+                </p>
+            </article>
+
+            <article class="lf-card">
+                <div class="lf-number">02 / CONNECT</div>
+                <h3>A simple webpage</h3>
+                <p>
+                    The finder scans the code and opens an item-specific
+                    page with clear return instructions.
+                </p>
+            </article>
+
+            <article class="lf-card">
+                <div class="lf-number">03 / PROTECT</div>
+                <h3>Privacy by design</h3>
+                <p>
+                    The owner's email address and home address stay
+                    hidden. A private messaging system can connect
+                    the finder and owner.
+                </p>
+            </article>
+        </div>
+    </section>
+
+    <section class="lf-section" id="how-it-works">
+        <h2>How it could work</h2>
+
+        <div class="lf-grid">
+            <article class="lf-card">
+                <h3>1. Register</h3>
+                <p>
+                    The owner registers an item and receives its
+                    unique QR code.
+                </p>
+            </article>
+
+            <article class="lf-card">
+                <h3>2. Scan</h3>
+                <p>
+                    Someone finds the item and scans the QR code
+                    using a smartphone camera.
+                </p>
+            </article>
+
+            <article class="lf-card">
+                <h3>3. Reconnect</h3>
+                <p>
+                    The finder sends a message through the webpage.
+                    The owner receives a notification and arranges
+                    a safe return.
+                </p>
+            </article>
+        </div>
+
+        <div class="lf-callout">
+            <strong>The principle:</strong>
+            Make returning a lost item easier than leaving it behind.
+        </div>
+    </section>
+
+    <section class="lf-section">
+        <h2>Where it could be used</h2>
+
+        <div class="lf-grid">
+            <article class="lf-card">
+                <h3>Keys</h3>
+                <p>House keys, car keys and keychains.</p>
+            </article>
+
+            <article class="lf-card">
+                <h3>Bags & luggage</h3>
+                <p>Backpacks, suitcases and travel bags.</p>
+            </article>
+
+            <article class="lf-card">
+                <h3>Everyday belongings</h3>
+                <p>Water bottles, notebooks and other personal items.</p>
+            </article>
+        </div>
+    </section>
+
+    <section class="lf-section">
+        <h2>From concept to reality</h2>
+        <p>
+            The first version would demonstrate the experience.
+            A future implementation could include item registration,
+            unique QR-code generation, a secure database, private
+            messaging and email notifications.
+        </p>
+
+        <p>
+            The aim is to develop a practical, privacy-conscious
+            Lost & Found service that can grow into a real product.
+        </p>
+    </section>
+
+    <div class="lf-footer">
+        Lost & Found QR — an independent concept by Avinash.
+        This page is a concept demonstration, not yet a working
+        item-registration or recovery service.
+    </div>
+
+</main>
+</body>
+</html>
+
