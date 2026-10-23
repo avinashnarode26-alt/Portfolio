@@ -403,12 +403,219 @@
 
     const $ = id => document.getElementById(id);
 
-    $("cadFile").addEventListener("change", function () {
-        const file = this.files[0];
-        $("fileStatus").textContent = file
-            ? file.name + " selected. Geometry is not analyzed in this demo."
-            : "Demo only: selecting a file does not analyze its geometry.";
-    });
+   
+const materialProperties = {
+    "3":  { name: "PLA plastic", density: 1.24 },
+    "4":  { name: "ABS plastic", density: 1.04 },
+    "6":  { name: "PA12 nylon", density: 1.01 },
+    "25": { name: "Aluminium alloy", density: 2.70 }
+};
+
+let cadGeometry = null;
+
+function getModelScale() {
+    const unit = $("modelUnits").value;
+    return { mm: 1, cm: 10, m: 1000, in: 25.4 }[unit];
+}
+
+function parseSTL(buffer, scale) {
+    const view = new DataView(buffer);
+    let triangles = [];
+
+    // Binary STL: 80-byte header + 4-byte triangle count.
+    const count = buffer.byteLength >= 84
+        ? view.getUint32(80, true)
+        : 0;
+
+    const isBinary =
+        count > 0 &&
+        84 + count * 50 === buffer.byteLength;
+
+    if (isBinary) {
+        let offset = 84;
+
+        for (let i = 0; i < count; i++) {
+            offset += 12; // Skip normal vector.
+
+            const points = [];
+
+            for (let j = 0; j < 3; j++) {
+                points.push([
+                    view.getFloat32(offset, true) * scale,
+                    view.getFloat32(offset + 4, true) * scale,
+                    view.getFloat32(offset + 8, true) * scale
+                ]);
+                offset += 12;
+            }
+
+            offset += 2; // Attribute byte count.
+            triangles.push(points);
+        }
+    } else {
+        const text = new TextDecoder().decode(buffer);
+        const matches = [...text.matchAll(
+            /vertex\s+([-+0-9.eE]+)\s+([-+0-9.eE]+)\s+([-+0-9.eE]+)/gi
+        )];
+
+        if (!matches.length || matches.length % 3 !== 0) {
+            throw new Error(
+                "Invalid or unsupported STL file. Please select a valid STL mesh."
+            );
+        }
+
+        for (let i = 0; i < matches.length; i += 3) {
+            triangles.push(
+                matches.slice(i, i + 3).map(match => [
+                    Number(match[1]) * scale,
+                    Number(match[2]) * scale,
+                    Number(match[3]) * scale
+                ])
+            );
+        }
+    }
+
+    if (!triangles.length) {
+        throw new Error("No triangles were found in this STL file.");
+    }
+
+    return triangles;
+}
+
+function analyzeSTL(triangles) {
+    let signedVolume = 0;
+    let surfaceArea = 0;
+    const edges = new Map();
+
+    const cross = (a, b) => [
+        a[1] * b[2] - a[2] * b[1],
+        a[2] * b[0] - a[0] * b[2],
+        a[0] * b[1] - a[1] * b[0]
+    ];
+
+    const dot = (a, b) =>
+        a[0] * b[0] + a[1] * b[1] + a[2] * b[2];
+
+    const subtract = (a, b) =>
+        [a[0] - b[0], a[1] - b[1], a[2] - b[2]];
+
+    const length = v =>
+        Math.sqrt(dot(v, v));
+
+    const vertexKey = p =>
+        p.map(n => (Math.abs(n) < 1e-8 ? 0 : n).toFixed(6)).join(",");
+
+    function addEdge(a, b) {
+        const ka = vertexKey(a);
+        const kb = vertexKey(b);
+        const key = ka < kb ? ka + "|" + kb : kb + "|" + ka;
+        edges.set(key, (edges.get(key) || 0) + 1);
+    }
+
+    for (const triangle of triangles) {
+        const [a, b, c] = triangle;
+
+        if (![...a, ...b, ...c].every(Number.isFinite)) {
+            throw new Error("The STL contains invalid coordinates.");
+        }
+
+        const ab = subtract(b, a);
+        const ac = subtract(c, a);
+
+        surfaceArea += length(cross(ab, ac)) / 2;
+
+        // Signed tetrahedron volume; orientation is important.
+        signedVolume += dot(a, cross(b, c)) / 6;
+
+        addEdge(a, b);
+        addEdge(b, c);
+        addEdge(c, a);
+    }
+
+    const watertight = [...edges.values()].every(count => count === 2);
+    const volumeMm3 = Math.abs(signedVolume);
+
+    return {
+        volumeCm3: volumeMm3 / 1000,
+        areaCm2: surfaceArea / 100,
+        watertight,
+        triangles: triangles.length
+    };
+}
+
+function updateCADProperties() {
+    if (!cadGeometry) return;
+
+    const material = materialProperties[$("material").value];
+
+    if (!material) return;
+
+    const massGrams = cadGeometry.volumeCm3 * material.density;
+
+    $("partMass").value = (massGrams / 1000).toFixed(6);
+
+    $("cadProperties").replaceChildren();
+
+    const heading = document.createElement("h3");
+    heading.textContent = "CAD geometry results";
+
+    const details = document.createElement("p");
+    details.style.whiteSpace = "pre-line";
+    details.textContent =
+        "Volume: " + cadGeometry.volumeCm3.toFixed(3) + " cm³\n" +
+        "Surface area: " + cadGeometry.areaCm2.toFixed(3) + " cm²\n" +
+        "Material: " + material.name + "\n" +
+        "Density: " + material.density + " g/cm³\n" +
+        "Estimated solid mass: " + massGrams.toFixed(3) + " g\n" +
+        "Triangles: " + cadGeometry.triangles;
+
+    const warning = document.createElement("p");
+    warning.className = "am-note";
+    warning.textContent = cadGeometry.watertight
+        ? "Mesh check: every detected edge belongs to two triangles. Confirm mesh orientation and geometry validity before relying on the volume."
+        : "Warning: the mesh may have open or disconnected edges. Volume and mass may be unreliable.";
+
+    $("cadProperties").append(heading, details, warning);
+}
+
+$("cadFile").addEventListener("change", async function () {
+    const file = this.files[0];
+
+    cadGeometry = null;
+    $("cadProperties").replaceChildren();
+
+    if (!file) {
+        $("fileStatus").textContent = "No file selected.";
+        return;
+    }
+
+    $("fileStatus").textContent = "Reading and analyzing STL mesh...";
+
+    try {
+        const buffer = await file.arrayBuffer();
+        const triangles = parseSTL(buffer, getModelScale());
+        cadGeometry = analyzeSTL(triangles);
+
+        $("fileStatus").textContent =
+            file.name + " — " + cadGeometry.triangles + " triangles analyzed.";
+
+        updateCADProperties();
+    } catch (error) {
+        $("fileStatus").textContent = error.message;
+        $("cadProperties").textContent =
+            "Please check the STL file and try again.";
+    }
+});
+
+$("modelUnits").addEventListener("change", async function () {
+    const file = $("cadFile").files[0];
+    if (!file) return;
+
+    // Re-read the same file using the newly selected units.
+    $("cadFile").dispatchEvent(new Event("change"));
+});
+
+$("material").addEventListener("change", updateCADProperties);
+
 
     $("calculate").addEventListener("click", function () {
         const mass = Number($("partMass").value);
