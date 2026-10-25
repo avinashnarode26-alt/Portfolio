@@ -944,7 +944,8 @@ h1 {
         const selectedDomain = domainFilter.value.toLowerCase();
         const query = searchInput.value.trim().toLowerCase();
         let visibleCount = 0;
-
+        
+rows.forEach(function (row) {
         const rowDomain = (row.dataset.domain || "").toLowerCase();
 const rowText = row.textContent.toLowerCase();
 
