@@ -531,73 +531,7 @@ h1 {
 </div>
 
 <script>
-const jobs = [
-    {
-        id: 1,
-        title: "Mechanical Design Engineer",
-        company: "Demo Automotive GmbH",
-        location: "Munich, Bavaria, Germany",
-        daysAgo: 0,
-        experience: "Mid-level",
-        cad: ["Siemens NX"],
-        language: "English",
-        employment: "Full-time",
-        source: "Company website",
-        description: "Mechanical design, 3D modelling, engineering drawings and product development."
-    },
-    {
-        id: 2,
-        title: "CAD Designer – Product Development",
-        company: "Example Engineering AG",
-        location: "Augsburg, Bavaria, Germany",
-        daysAgo: 1,
-        experience: "Mid-level",
-        cad: ["CATIA", "SolidWorks"],
-        language: "English and German",
-        employment: "Full-time",
-        source: "LinkedIn",
-        description: "CAD assemblies, technical documentation and cross-functional engineering."
-    },
-    {
-        id: 3,
-        title: "Mechanical Development Engineer",
-        company: "Sample Mobility GmbH",
-        location: "Rosenheim, Bavaria, Germany",
-        daysAgo: 2,
-        experience: "Senior",
-        cad: ["Siemens NX", "Creo"],
-        language: "German",
-        employment: "Full-time",
-        source: "Indeed",
-        description: "Design validation, tolerance analysis and manufacturing support."
-    },
-    {
-        id: 4,
-        title: "Product Design Engineer",
-        company: "Illustration Aerospace GmbH",
-        location: "Munich, Germany",
-        daysAgo: 4,
-        experience: "Entry level",
-        cad: ["SolidWorks"],
-        language: "English",
-        employment: "Full-time",
-        source: "XING",
-        description: "Prototype development, CAD modelling and design documentation."
-    },
-    {
-        id: 5,
-        title: "Mechanical CAD Engineer",
-        company: "Example Industrial Systems",
-        location: "Ingolstadt, Germany",
-        daysAgo: 6,
-        experience: "Mid-level",
-        cad: ["Siemens NX", "CATIA"],
-        language: "English and German",
-        employment: "Contract",
-        source: "Company website",
-        description: "Industrial equipment design, drawings, BOMs and DFM."
-    }
-];
+let jobs = [];
 
 const $ = id => document.getElementById(id);
 
@@ -611,7 +545,8 @@ function readStorage(key, fallback) {
 }
 
 let saved = readStorage("jobTrackerSaved", []);
-let statuses = readStorage("jobTrackerStatuses", {});
+    let statuses = readStorage("jobTrackerStatuses", {});
+
 
 function persist() {
     localStorage.setItem("jobTrackerSaved", JSON.stringify(saved));
