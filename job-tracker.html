@@ -1057,7 +1057,68 @@ render();
         logoutButton.hidden = true;
         authMessage.textContent = "You have signed out.";
     });
+document.getElementById("manualJobForm").addEventListener("submit", async (event) => {
+    event.preventDefault();
 
+    const button = document.getElementById("addManualJobButton");
+    button.disabled = true;
+    button.textContent = "Saving job...";
+
+    try {
+        const { data: sessionData, error: sessionError } =
+            await supabaseClient.auth.getSession();
+
+        const session = sessionData?.session;
+
+        if (sessionError || !session) {
+            alert("Please sign in before adding a job.");
+            return;
+        }
+
+        const cadInput = document.getElementById("manualCad").value.trim();
+
+        const newJob = {
+            user_id: session.user.id,
+            title: document.getElementById("manualTitle").value.trim(),
+            company: document.getElementById("manualCompany").value.trim(),
+            location: document.getElementById("manualLocation").value.trim() || null,
+            cad_software: cadInput
+                ? cadInput.split(",").map(item => item.trim()).filter(Boolean)
+                : [],
+            language: document.getElementById("manualLanguage").value,
+            employment_type: document.getElementById("manualEmployment").value,
+            experience_level: document.getElementById("manualExperience").value,
+            source: document.getElementById("manualSource").value,
+            job_url: document.getElementById("manualUrl").value.trim() || null,
+            notes: document.getElementById("manualNotes").value.trim() || null,
+            application_status: "Not applied",
+            is_saved: false
+        };
+
+        const { error } = await supabaseClient
+            .from("jobs")
+            .insert(newJob);
+
+        if (error) {
+            console.error("Could not add job:", error);
+            alert("Could not save the job: " + error.message);
+            return;
+        }
+
+        document.getElementById("manualJobForm").reset();
+
+        await loadJobs();
+
+        alert("Job added successfully!");
+
+    } catch (error) {
+        console.error("Unexpected error:", error);
+        alert("Something went wrong while saving the job.");
+    } finally {
+        button.disabled = false;
+        button.textContent = "Add job to tracker";
+    }
+});
     updateLoginState();
 </script>
 </body>
