@@ -763,6 +763,80 @@ render();
         SUPABASE_PUBLISHABLE_KEY
     );
 
+    async function loadJobs() {
+    const { data: sessionData, error: sessionError } =
+        await supabaseClient.auth.getSession();
+
+    if (sessionError || !sessionData.session) {
+        jobs = [];
+        render();
+        return;
+    }
+
+    const userId = sessionData.session.user.id;
+
+    authMessage.textContent = "Loading your jobs...";
+
+    const { data, error } = await supabaseClient
+        .from("jobs")
+        .select("*")
+        .eq("user_id", userId)
+        .order("created_at", { ascending: false });
+
+    if (error) {
+        console.error("Could not load jobs:", error);
+        authMessage.textContent = "Could not load jobs: " + error.message;
+        return;
+    }
+
+    jobs = (data || []).map(job => {
+        const postedDate = job.posted_date
+            ? new Date(job.posted_date + "T00:00:00")
+            : null;
+
+        const daysAgo = postedDate
+            ? Math.max(
+                0,
+                Math.floor(
+                    (new Date().setHours(0, 0, 0, 0) - postedDate.getTime())
+                    / 86400000
+                )
+              )
+            : 99999;
+
+        return {
+            id: job.id,
+            title: job.title,
+            company: job.company,
+            location: [job.location, job.german_state]
+                .filter(Boolean)
+                .join(", ") || "Germany",
+            daysAgo,
+            experience: job.experience_level || "Not specified",
+            cad: job.cad_software || [],
+            language: job.language || "English",
+            employment: job.employment_type || "Not specified",
+            source: job.source || "Company website",
+            description: job.description || "",
+            jobUrl: job.job_url || "",
+            isSaved: job.is_saved || false,
+            applicationStatus: job.application_status || "Not applied"
+        };
+    });
+
+    saved = jobs.filter(job => job.isSaved).map(job => job.id);
+
+    statuses = {};
+    jobs.forEach(job => {
+        statuses[job.id] = job.applicationStatus;
+    });
+
+    render();
+
+    authMessage.textContent =
+        jobs.length + " job(s) loaded from your database.";
+}
+
     const loginForm = document.getElementById("loginForm");
     const authMessage = document.getElementById("authMessage");
     const logoutButton = document.getElementById("logoutButton");
@@ -781,6 +855,14 @@ render();
         );
 
         logoutButton.hidden = !data.session;
+        if (data.session) {
+    await loadJobs();
+} else {
+    jobs = [];
+    saved = [];
+    statuses = {};
+    render();
+}
     }
 
     loginForm.addEventListener("submit", async (event) => {
