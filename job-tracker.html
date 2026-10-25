@@ -999,55 +999,52 @@ h1 {
 
 <script>
 (function () {
-    const domainFilter = document.getElementById("companyDomainFilter");
+    const sectorFilter = document.getElementById("companySectorFilter");
     const searchInput = document.getElementById("companyDirectorySearch");
     const table = document.getElementById("companyDirectoryTable");
     const countLabel = document.getElementById("companyDirectoryCount");
 
-    if (!domainFilter || !searchInput || !table) return;
+    if (!sectorFilter || !table) return;
 
     const rows = Array.from(table.querySelectorAll("tbody tr"));
 
-function filterCompanies() {
-    const selectedDomain = domainFilter.value.trim().toLowerCase();
-    const query = searchInput.value.trim().toLowerCase();
-    let visibleCount = 0;
+    function filterCompanies() {
+        const selectedSector = sectorFilter.value.trim();
+        const query = searchInput
+            ? searchInput.value.trim().toLowerCase()
+            : "";
 
-    rows.forEach(function (row) {
-        const sectorNo = Array.from(row.cells)
-            .map(cell => cell.textContent.trim())
-            .find((value, index) => index === 2);
+        let visibleCount = 0;
 
-        const rowText = row.textContent.toLowerCase();
+        rows.forEach(function (row) {
+            const sectorNo = row.cells[2]?.textContent.trim() || "";
+            const rowText = row.textContent.toLowerCase();
 
-        const matchesDomain =
-            selectedDomain === "all" ||
-            sectorNo === selectedDomain ||
-            (selectedDomain === "automotive" && sectorNo === "1") ||
-            (selectedDomain === "machine manufacturer" && sectorNo === "2") ||
-            (selectedDomain === "robotics" && sectorNo === "3") ||
-            (selectedDomain === "aerospace" && sectorNo === "4") ||
-            (selectedDomain === "hydrogen" && sectorNo === "5") ||
-            (selectedDomain === "energy & clean technology" && sectorNo === "6") ||
-            (selectedDomain === "defence" && sectorNo === "7") ||
-            (selectedDomain === "engineering services" && sectorNo === "8") ||
-            (selectedDomain === "agriculture machine" && sectorNo === "9") ||
-            (selectedDomain === "other" && sectorNo === "10");
+            const matchesSector =
+                selectedSector === "all" ||
+                sectorNo === selectedSector;
 
-        const matchesSearch = rowText.includes(query);
-        const visible = matchesDomain && matchesSearch;
+            const matchesSearch = rowText.includes(query);
 
-        row.style.display = visible ? "" : "none";
+            const visible = matchesSector && matchesSearch;
 
-        if (visible) visibleCount++;
-    });
+            row.style.display = visible ? "" : "none";
 
-    countLabel.textContent =
-        "Showing " + visibleCount + " of " + rows.length + " companies";
-}
+            if (visible) visibleCount++;
+        });
 
-    domainFilter.addEventListener("change", filterCompanies);
-    searchInput.addEventListener("input", filterCompanies);
+        if (countLabel) {
+            countLabel.textContent =
+                "Showing " + visibleCount +
+                " of " + rows.length + " companies";
+        }
+    }
+
+    sectorFilter.addEventListener("change", filterCompanies);
+
+    if (searchInput) {
+        searchInput.addEventListener("input", filterCompanies);
+    }
 
     filterCompanies();
 })();
