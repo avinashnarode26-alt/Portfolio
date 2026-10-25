@@ -5,6 +5,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Mechanical Job Tracker</title>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
 :root {
     --bg: #f4f6fa;
@@ -807,6 +808,82 @@ $("clearFilters").addEventListener("click", () => {
 });
 
 render();
+</script>
+    <style>
+    body:not(.authenticated) .layout {
+        display: none;
+    }
+
+    body.authenticated #loginPanel {
+        display: none;
+    }
+</style>
+
+<script>
+    const SUPABASE_URL = "https://deigtociwzsethulgwin.supabase.co";
+    const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_OM5t5oLH0htcfcNay-ZUbg_BOnWpUEt";
+
+    const supabaseClient = window.supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_PUBLISHABLE_KEY
+    );
+
+    const loginForm = document.getElementById("loginForm");
+    const authMessage = document.getElementById("authMessage");
+    const logoutButton = document.getElementById("logoutButton");
+
+    async function updateLoginState() {
+        const { data, error } = await supabaseClient.auth.getSession();
+
+        if (error) {
+            authMessage.textContent = "Could not check your login: " + error.message;
+            return;
+        }
+
+        document.body.classList.toggle(
+            "authenticated",
+            Boolean(data.session)
+        );
+
+        logoutButton.hidden = !data.session;
+    }
+
+    loginForm.addEventListener("submit", async (event) => {
+        event.preventDefault();
+
+        authMessage.textContent = "Signing in...";
+
+        const email = document.getElementById("loginEmail").value.trim();
+        const password = document.getElementById("loginPassword").value;
+
+        const { error } = await supabaseClient.auth.signInWithPassword({
+            email,
+            password
+        });
+
+        if (error) {
+            authMessage.textContent = "Sign-in failed: " + error.message;
+            return;
+        }
+
+        authMessage.textContent = "Signed in successfully.";
+        await updateLoginState();
+    });
+
+    logoutButton.addEventListener("click", async () => {
+        const { error } = await supabaseClient.auth.signOut();
+
+        if (error) {
+            authMessage.textContent = "Sign-out failed: " + error.message;
+            return;
+        }
+
+        document.body.classList.remove("authenticated");
+        logoutButton.hidden = true;
+        authMessage.textContent = "You have signed out.";
+    });
+
+    updateLoginState();
 </script>
 </body>
 </html>
