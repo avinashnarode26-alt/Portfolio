@@ -746,6 +746,10 @@ render();
     body.authenticated #loginPanel {
     display: block;
 }
+
+body:not(.authenticated) .layout {
+    display: none;
+}
 </style>
 
 <script>
