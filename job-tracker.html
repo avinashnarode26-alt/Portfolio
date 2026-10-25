@@ -667,19 +667,47 @@ function render() {
         const status = document.createElement("select");
         status.setAttribute("aria-label", "Application status for " + job.title);
 
-        ["Interested", "Applied", "Interview", "Rejected", "Offer"].forEach(value => {
+["Not applied", "Interested", "Applied", "Interview", "Rejected", "Offer"].forEach(value => {            
             const option = document.createElement("option");
             option.value = value;
             option.textContent = "Status: " + value;
-            option.selected = (statuses[job.id] || "Interested") === value;
+            option.selected =
+    (statuses[job.id] || job.applicationStatus || "Not applied") === value;
             status.appendChild(option);
         });
 
-        status.addEventListener("change", () => {
-            statuses[job.id] = status.value;
-            persist();
-            render();
-        });
+status.addEventListener("change", async () => {
+    const previousStatus = statuses[job.id] || job.applicationStatus;
+
+    status.disabled = true;
+
+    const { data: userData, error: userError } =
+        await supabaseClient.auth.getUser();
+
+    if (userError || !userData.user) {
+        alert("Please sign in again.");
+        status.disabled = false;
+        return;
+    }
+
+    const { error } = await supabaseClient
+        .from("jobs")
+        .update({ application_status: status.value })
+        .eq("id", job.id)
+        .eq("user_id", userData.user.id);
+
+    if (error) {
+        alert("Could not save status: " + error.message);
+        status.value = previousStatus || "Not applied";
+        status.disabled = false;
+        return;
+    }
+
+    statuses[job.id] = status.value;
+    job.applicationStatus = status.value;
+
+    render();
+});
 
         const actions = document.createElement("div");
         actions.className = "job-actions";
@@ -687,13 +715,41 @@ function render() {
         const saveButton = document.createElement("button");
         saveButton.className = "btn" + (saved.includes(job.id) ? " saved" : "");
         saveButton.textContent = saved.includes(job.id) ? "★ Saved" : "☆ Save";
-        saveButton.addEventListener("click", () => {
-            saved = saved.includes(job.id)
-                ? saved.filter(id => id !== job.id)
-                : [...saved, job.id];
-            persist();
-            render();
-        });
+saveButton.addEventListener("click", async () => {
+    const previousSaved = saved.includes(job.id);
+    const newSaved = !previousSaved;
+
+    saveButton.disabled = true;
+
+    const { data: userData, error: userError } =
+        await supabaseClient.auth.getUser();
+
+    if (userError || !userData.user) {
+        alert("Please sign in again.");
+        saveButton.disabled = false;
+        return;
+    }
+
+    const { error } = await supabaseClient
+        .from("jobs")
+        .update({ is_saved: newSaved })
+        .eq("id", job.id)
+        .eq("user_id", userData.user.id);
+
+    if (error) {
+        alert("Could not save this job: " + error.message);
+        saveButton.disabled = false;
+        return;
+    }
+
+    job.isSaved = newSaved;
+
+    saved = newSaved
+        ? [...saved, job.id]
+        : saved.filter(id => id !== job.id);
+
+    render();
+});
 
         const applyButton = document.createElement("button");
         applyButton.className = "btn btn-primary";
