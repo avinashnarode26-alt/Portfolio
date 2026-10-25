@@ -600,18 +600,18 @@ h1 {
        target="_blank" rel="noopener noreferrer">English-speaking jobs</a>
 
 </div>
-<div class="section-heading" style="display:none;">
+<div class="section-heading">
     <h2>Add a job to your tracker</h2>
 </div>
 
 <form id="manualJobForm"
-      style="display:none; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:12px; margin-bottom:28px;">
+      style="display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:12px; margin-bottom:28px;">
 
-<input class="search-input" id="manualTitle"
-       placeholder="Job title">
+    <input class="search-input" id="manualTitle"
+           placeholder="Job title *" required>
 
     <input class="search-input" id="manualCompany"
-           placeholder="Company name">
+           placeholder="Company name *" required>
 
     <input class="search-input" id="manualLocation"
            placeholder="Location (e.g. Munich, Bavaria)">
@@ -659,14 +659,15 @@ h1 {
     <button class="btn btn-primary" type="submit"
             id="addManualJobButton"
             style="grid-column:1/-1;">
-        </form>
+        <div class="section-heading" style="margin-top:24px;">
 
-<div class="section-heading" style="margin-top:24px;">
+            <div class="section-heading" style="margin-top:24px;">
     <h2>Engineering Company Directory</h2>
     <p>Find engineering employers by industry and explore their careers.</p>
 </div>
 
 <div style="display:flex; gap:12px; flex-wrap:wrap; margin-bottom:16px;">
+
     <select id="companyDomainFilter"
             class="search-input"
             aria-label="Filter companies by industry"
