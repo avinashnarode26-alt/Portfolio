@@ -490,6 +490,91 @@ h1 {
         <button class="btn btn-primary" type="submit">Search jobs</button>
     </form>
 
+    <div class="section-heading" style="margin-top: 24px;">
+    <h2>Search external job websites</h2>
+</div>
+
+<div style="display:flex; flex-wrap:wrap; gap:10px; margin-bottom:24px;">
+    <a class="btn btn-primary"
+       href="https://de.linkedin.com/jobs/search/?keywords=Mechanical%20Design%20Engineer&location=Germany"
+       target="_blank" rel="noopener noreferrer">LinkedIn Jobs</a>
+
+    <a class="btn btn-primary"
+       href="https://de.indeed.com/jobs?q=Mechanical+Design+Engineer&l=Germany"
+       target="_blank" rel="noopener noreferrer">Indeed Germany</a>
+
+    <a class="btn btn-primary"
+       href="https://www.stepstone.de/jobs/mechanical-design-engineer"
+       target="_blank" rel="noopener noreferrer">StepStone</a>
+
+    <a class="btn btn-primary"
+       href="https://www.arbeitsagentur.de/jobsuche/"
+       target="_blank" rel="noopener noreferrer">Federal Job Agency</a>
+</div>
+
+<div class="section-heading">
+    <h2>Add a job to your tracker</h2>
+</div>
+
+<form id="manualJobForm"
+      style="display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:12px; margin-bottom:28px;">
+
+    <input class="search-input" id="manualTitle"
+           placeholder="Job title *" required>
+
+    <input class="search-input" id="manualCompany"
+           placeholder="Company name *" required>
+
+    <input class="search-input" id="manualLocation"
+           placeholder="Location (e.g. Munich, Bavaria)">
+
+    <input class="search-input" id="manualCad"
+           placeholder="CAD software (e.g. Siemens NX, CATIA)">
+
+    <select class="search-input" id="manualLanguage">
+        <option value="English">English</option>
+        <option value="German">German</option>
+        <option value="English and German">English and German</option>
+        <option value="Not specified">Not specified</option>
+    </select>
+
+    <select class="search-input" id="manualEmployment">
+        <option value="Full-time">Full-time</option>
+        <option value="Part-time">Part-time</option>
+        <option value="Contract">Contract</option>
+        <option value="Internship">Internship</option>
+    </select>
+
+    <select class="search-input" id="manualExperience">
+        <option value="Experienced">Experienced</option>
+        <option value="Entry level">Entry level</option>
+        <option value="Mid-level">Mid-level</option>
+        <option value="Senior">Senior</option>
+    </select>
+
+    <select class="search-input" id="manualSource">
+        <option value="LinkedIn">LinkedIn</option>
+        <option value="Indeed">Indeed</option>
+        <option value="StepStone">StepStone</option>
+        <option value="Company website">Company website</option>
+        <option value="Federal Employment Agency">Federal Employment Agency</option>
+        <option value="Other">Other</option>
+    </select>
+
+    <input class="search-input" id="manualUrl"
+           type="url" placeholder="Job advertisement URL">
+
+    <textarea class="search-input" id="manualNotes"
+              placeholder="Notes (optional)"
+              style="min-height:80px; grid-column:1/-1;"></textarea>
+
+    <button class="btn btn-primary" type="submit"
+            id="addManualJobButton"
+            style="grid-column:1/-1;">
+        Add job to tracker
+    </button>
+</form>
+
     <div class="stats">
         <div class="stat">
             <div class="stat-label">Matching jobs</div>
