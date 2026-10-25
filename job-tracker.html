@@ -738,18 +738,19 @@ $("clearFilters").addEventListener("click", () => {
 
 render();
 </script>
-    <style>
+    
+<style>
     body:not(.authenticated) .layout {
-        display: none;
+        display: none !important;
+    }
+
+    body.authenticated .layout {
+        display: grid;
     }
 
     body.authenticated #loginPanel {
-    display: block;
-}
-
-body:not(.authenticated) .layout {
-    display: none;
-}
+        display: none !important;
+    }
 </style>
 
 <script>
