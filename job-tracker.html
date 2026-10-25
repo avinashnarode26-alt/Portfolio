@@ -1,0 +1,770 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mechanical Job Tracker</title>
+<style>
+:root {
+    --bg: #f4f6fa;
+    --panel: #ffffff;
+    --text: #182230;
+    --muted: #667085;
+    --line: #e3e8ef;
+    --primary: #2357d9;
+    --primary-light: #edf2ff;
+    --green: #087f5b;
+}
+
+* { box-sizing: border-box; }
+
+body {
+    margin: 0;
+    font-family: Arial, Helvetica, sans-serif;
+    color: var(--text);
+    background: var(--bg);
+}
+
+button, input, select { font: inherit; }
+button, a, select { cursor: pointer; }
+
+.topbar {
+    background: #fff;
+    border-bottom: 1px solid var(--line);
+    padding: 18px 28px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+}
+
+.brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-weight: 700;
+    font-size: 19px;
+}
+
+.brand-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 11px;
+    background: var(--primary);
+    color: white;
+    display: grid;
+    place-items: center;
+    font-size: 21px;
+}
+
+.topbar a {
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 14px;
+}
+
+.layout {
+    display: grid;
+    grid-template-columns: 245px minmax(0, 1fr);
+    gap: 24px;
+    max-width: 1500px;
+    margin: 28px auto;
+    padding: 0 24px;
+}
+
+.sidebar, .main-panel {
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: 14px;
+}
+
+.sidebar {
+    padding: 22px;
+    align-self: start;
+}
+
+.sidebar h2 {
+    font-size: 16px;
+    margin: 0 0 22px;
+}
+
+.filter-group { margin-bottom: 20px; }
+
+.filter-group label {
+    display: block;
+    font-size: 13px;
+    font-weight: 700;
+    margin-bottom: 8px;
+}
+
+.filter-group input,
+.filter-group select,
+.search-input,
+.sort-select {
+    width: 100%;
+    padding: 11px;
+    border: 1px solid #d5dce7;
+    border-radius: 8px;
+    background: white;
+    color: var(--text);
+}
+
+.check-label {
+    display: flex !important;
+    align-items: center;
+    gap: 8px;
+    font-weight: 400 !important;
+    margin: 10px 0;
+}
+
+.check-label input { width: auto; }
+
+.btn {
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    padding: 10px 14px;
+    background: #fff;
+    color: var(--text);
+    font-weight: 600;
+}
+
+.btn-primary {
+    background: var(--primary);
+    color: white;
+    border-color: var(--primary);
+}
+
+.btn:hover { filter: brightness(.97); }
+
+.clear-btn { width: 100%; }
+
+.main-panel {
+    padding: 25px;
+    min-width: 0;
+}
+
+.eyebrow {
+    color: var(--primary);
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+h1 {
+    font-size: clamp(24px, 3vw, 32px);
+    margin: 10px 0;
+}
+
+.subtitle {
+    color: var(--muted);
+    font-size: 14px;
+    line-height: 1.6;
+    margin: 0 0 22px;
+}
+
+.notice {
+    background: #fff8e7;
+    border: 1px solid #f1dfad;
+    color: #775414;
+    border-radius: 8px;
+    padding: 12px 14px;
+    font-size: 12px;
+    line-height: 1.5;
+    margin-bottom: 22px;
+}
+
+.search-row {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 10px;
+    margin-bottom: 22px;
+}
+
+.search-input { padding: 13px; }
+
+.stats {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 12px;
+    margin-bottom: 25px;
+}
+
+.stat {
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 16px;
+}
+
+.stat-label {
+    font-size: 12px;
+    color: var(--muted);
+}
+
+.stat-number {
+    font-size: 25px;
+    font-weight: 700;
+    margin-top: 8px;
+}
+
+.section-heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin: 8px 0 16px;
+}
+
+.section-heading h2 { font-size: 18px; margin: 0; }
+
+.job-list { display: grid; gap: 14px; }
+
+.job-card {
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 19px;
+    transition: border-color .15s, box-shadow .15s;
+}
+
+.job-card:hover {
+    border-color: #b8c8f7;
+    box-shadow: 0 4px 16px #1822300b;
+}
+
+.job-top {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+}
+
+.job-title {
+    margin: 0 0 7px;
+    font-size: 17px;
+    line-height: 1.4;
+}
+
+.company { font-size: 14px; font-weight: 600; }
+
+.job-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 15px;
+    color: var(--muted);
+    font-size: 12px;
+    margin: 14px 0;
+}
+
+.badges {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 7px;
+    margin: 12px 0;
+}
+
+.badge {
+    background: #f0f3f8;
+    border-radius: 5px;
+    padding: 5px 8px;
+    font-size: 11px;
+    color: #475467;
+}
+
+.source-badge {
+    background: var(--primary-light);
+    color: var(--primary);
+}
+
+.demo-badge {
+    background: #fff4db;
+    color: #865d08;
+}
+
+.job-bottom {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    flex-wrap: wrap;
+    border-top: 1px solid var(--line);
+    padding-top: 13px;
+    margin-top: 14px;
+}
+
+.job-bottom select {
+    border: 1px solid var(--line);
+    border-radius: 7px;
+    padding: 8px;
+    max-width: 180px;
+    background: #fff;
+    font-size: 12px;
+}
+
+.job-actions { display: flex; gap: 8px; flex-wrap: wrap; }
+
+.job-actions .btn { font-size: 12px; padding: 8px 11px; }
+
+.saved { color: var(--primary); border-color: #b7c8ff; }
+
+.empty {
+    text-align: center;
+    color: var(--muted);
+    padding: 45px 15px;
+    border: 1px dashed #cbd5e1;
+    border-radius: 12px;
+}
+
+.footer-note {
+    color: var(--muted);
+    font-size: 12px;
+    margin-top: 24px;
+    line-height: 1.6;
+}
+
+@media (max-width: 850px) {
+    .layout { grid-template-columns: 1fr; margin-top: 16px; }
+    .sidebar { order: 2; }
+    .main-panel { order: 1; padding: 18px; }
+}
+
+@media (max-width: 520px) {
+    .topbar { padding: 14px; }
+    .topbar a { font-size: 12px; }
+    .layout { padding: 0 12px; }
+    .stats { grid-template-columns: 1fr; }
+    .search-row { grid-template-columns: 1fr; }
+    .job-top { flex-direction: column; }
+}
+</style>
+</head>
+
+<body>
+<header class="topbar">
+    <div class="brand">
+        <div class="brand-icon">⚙</div>
+        <span>Mechanical Job Tracker</span>
+    </div>
+    <a href="index.html">← Back to portfolio</a>
+</header>
+
+<div class="layout">
+
+<aside class="sidebar">
+    <h2>Filter jobs</h2>
+
+    <div class="filter-group">
+        <label for="location">Location</label>
+        <input id="location" placeholder="e.g. Munich, Germany">
+    </div>
+
+    <div class="filter-group">
+        <label for="posted">Posted date</label>
+        <select id="posted">
+            <option value="all">Any time</option>
+            <option value="1">Last 24 hours</option>
+            <option value="3">Last 3 days</option>
+            <option value="7">Last 7 days</option>
+        </select>
+    </div>
+
+    <div class="filter-group">
+        <label for="experience">Experience level</label>
+        <select id="experience">
+            <option value="all">Any experience</option>
+            <option>Entry level</option>
+            <option>Mid-level</option>
+            <option>Senior</option>
+        </select>
+    </div>
+
+    <div class="filter-group">
+        <label for="cad">CAD software</label>
+        <select id="cad">
+            <option value="all">All CAD software</option>
+            <option>Siemens NX</option>
+            <option>CATIA</option>
+            <option>SolidWorks</option>
+            <option>Creo</option>
+        </select>
+    </div>
+
+    <div class="filter-group">
+        <label for="language">Working language</label>
+        <select id="language">
+            <option value="all">Any language</option>
+            <option>English</option>
+            <option>German</option>
+            <option>English and German</option>
+        </select>
+    </div>
+
+    <div class="filter-group">
+        <label for="employment">Employment type</label>
+        <select id="employment">
+            <option value="all">Any type</option>
+            <option>Full-time</option>
+            <option>Part-time</option>
+            <option>Contract</option>
+            <option>Internship</option>
+        </select>
+    </div>
+
+    <div class="filter-group">
+        <label for="source">Job source</label>
+        <select id="source">
+            <option value="all">All sources</option>
+            <option>LinkedIn</option>
+            <option>Indeed</option>
+            <option>XING</option>
+            <option>Company website</option>
+        </select>
+    </div>
+
+    <div class="filter-group">
+        <label class="check-label">
+            <input type="checkbox" id="savedOnly">
+            Show saved jobs only
+        </label>
+    </div>
+
+    <button class="btn clear-btn" id="clearFilters">Clear filters</button>
+</aside>
+
+<main class="main-panel">
+    <div class="eyebrow">Your personal career dashboard</div>
+    <h1>Find your next engineering role</h1>
+    <p class="subtitle">
+        Track mechanical design, CAD, product development and manufacturing
+        opportunities in one place.
+    </p>
+
+    <div class="notice">
+        <strong>Prototype mode:</strong> The listings below are fictional
+        demonstration data. They are not current vacancies. Live job
+        integrations will be added in a later development phase.
+    </div>
+
+    <form class="search-row" id="searchForm">
+        <input class="search-input" id="search"
+               placeholder="Search job title, company, or skill..."
+               aria-label="Search jobs">
+        <button class="btn btn-primary" type="submit">Search jobs</button>
+    </form>
+
+    <div class="stats">
+        <div class="stat">
+            <div class="stat-label">Matching jobs</div>
+            <div class="stat-number" id="totalCount">0</div>
+        </div>
+        <div class="stat">
+            <div class="stat-label">Saved jobs</div>
+            <div class="stat-number" id="savedCount">0</div>
+        </div>
+        <div class="stat">
+            <div class="stat-label">Applications tracked</div>
+            <div class="stat-number" id="appliedCount">0</div>
+        </div>
+    </div>
+
+    <div class="section-heading">
+        <h2 id="resultsHeading">Job opportunities</h2>
+        <select class="sort-select" id="sort" aria-label="Sort jobs">
+            <option value="newest">Newest first</option>
+            <option value="oldest">Oldest first</option>
+            <option value="company">Company A–Z</option>
+        </select>
+    </div>
+
+    <div class="job-list" id="jobList"></div>
+
+    <p class="footer-note">
+        Your saved jobs and application statuses are stored in this browser
+        on this device. This prototype does not yet synchronize data across
+        devices or collect live listings.
+    </p>
+</main>
+</div>
+
+<script>
+const jobs = [
+    {
+        id: 1,
+        title: "Mechanical Design Engineer",
+        company: "Demo Automotive GmbH",
+        location: "Munich, Germany",
+        daysAgo: 0,
+        experience: "Mid-level",
+        cad: ["Siemens NX"],
+        language: "English",
+        employment: "Full-time",
+        source: "Company website",
+        description: "Mechanical design, 3D modelling, engineering drawings and product development."
+    },
+    {
+        id: 2,
+        title: "CAD Designer – Product Development",
+        company: "Example Engineering AG",
+        location: "Augsburg, Germany",
+        daysAgo: 1,
+        experience: "Mid-level",
+        cad: ["CATIA", "SolidWorks"],
+        language: "English and German",
+        employment: "Full-time",
+        source: "LinkedIn",
+        description: "CAD assemblies, technical documentation and cross-functional engineering."
+    },
+    {
+        id: 3,
+        title: "Mechanical Development Engineer",
+        company: "Sample Mobility GmbH",
+        location: "Rosenheim, Germany",
+        daysAgo: 2,
+        experience: "Senior",
+        cad: ["Siemens NX", "Creo"],
+        language: "German",
+        employment: "Full-time",
+        source: "Indeed",
+        description: "Design validation, tolerance analysis and manufacturing support."
+    },
+    {
+        id: 4,
+        title: "Product Design Engineer",
+        company: "Illustration Aerospace GmbH",
+        location: "Munich, Germany",
+        daysAgo: 4,
+        experience: "Entry level",
+        cad: ["SolidWorks"],
+        language: "English",
+        employment: "Full-time",
+        source: "XING",
+        description: "Prototype development, CAD modelling and design documentation."
+    },
+    {
+        id: 5,
+        title: "Mechanical CAD Engineer",
+        company: "Example Industrial Systems",
+        location: "Ingolstadt, Germany",
+        daysAgo: 6,
+        experience: "Mid-level",
+        cad: ["Siemens NX", "CATIA"],
+        language: "English and German",
+        employment: "Contract",
+        source: "Company website",
+        description: "Industrial equipment design, drawings, BOMs and DFM."
+    }
+];
+
+const $ = id => document.getElementById(id);
+
+function readStorage(key, fallback) {
+    try {
+        const value = JSON.parse(localStorage.getItem(key));
+        return value ?? fallback;
+    } catch {
+        return fallback;
+    }
+}
+
+let saved = readStorage("jobTrackerSaved", []);
+let statuses = readStorage("jobTrackerStatuses", {});
+
+function persist() {
+    localStorage.setItem("jobTrackerSaved", JSON.stringify(saved));
+    localStorage.setItem("jobTrackerStatuses", JSON.stringify(statuses));
+}
+
+function matches(job) {
+    const query = $("search").value.trim().toLowerCase();
+    const text = [
+        job.title, job.company, job.location,
+        job.description, job.source, ...job.cad
+    ].join(" ").toLowerCase();
+
+    if (query && !text.includes(query)) return false;
+
+    const location = $("location").value.trim().toLowerCase();
+    if (location && !job.location.toLowerCase().includes(location)) return false;
+
+    const posted = $("posted").value;
+    if (posted !== "all" && job.daysAgo >= Number(posted)) return false;
+
+    if ($("experience").value !== "all" &&
+        job.experience !== $("experience").value) return false;
+
+    if ($("cad").value !== "all" &&
+        !job.cad.includes($("cad").value)) return false;
+
+    if ($("language").value !== "all" &&
+        job.language !== $("language").value) return false;
+
+    if ($("employment").value !== "all" &&
+        job.employment !== $("employment").value) return false;
+
+    if ($("source").value !== "all" &&
+        job.source !== $("source").value) return false;
+
+    if ($("savedOnly").checked && !saved.includes(job.id)) return false;
+
+    return true;
+}
+
+function render() {
+    let results = jobs.filter(matches);
+    const sort = $("sort").value;
+
+    if (sort === "newest") results.sort((a, b) => a.daysAgo - b.daysAgo);
+    if (sort === "oldest") results.sort((a, b) => b.daysAgo - a.daysAgo);
+    if (sort === "company") results.sort((a, b) => a.company.localeCompare(b.company));
+
+    $("totalCount").textContent = results.length;
+    $("savedCount").textContent = saved.length;
+    $("appliedCount").textContent =
+        Object.values(statuses).filter(s => s !== "Interested").length;
+
+    $("resultsHeading").textContent =
+        $("savedOnly").checked ? "Saved jobs" : "Job opportunities";
+
+    const list = $("jobList");
+    list.replaceChildren();
+
+    if (!results.length) {
+        const empty = document.createElement("div");
+        empty.className = "empty";
+        empty.textContent = "No matching jobs. Try changing your filters.";
+        list.appendChild(empty);
+        return;
+    }
+
+    results.forEach(job => {
+        const card = document.createElement("article");
+        card.className = "job-card";
+
+        const top = document.createElement("div");
+        top.className = "job-top";
+
+        const info = document.createElement("div");
+        const title = document.createElement("h3");
+        title.className = "job-title";
+        title.textContent = job.title;
+
+        const company = document.createElement("div");
+        company.className = "company";
+        company.textContent = job.company;
+
+        info.append(title, company);
+
+        const demo = document.createElement("span");
+        demo.className = "badge demo-badge";
+        demo.textContent = "Demo listing";
+        top.append(info, demo);
+
+        const meta = document.createElement("div");
+        meta.className = "job-meta";
+        const postedText = job.daysAgo === 0
+            ? "Demonstration: today"
+            : `Demonstration: ${job.daysAgo} days ago`;
+
+        [ "📍 " + job.location, "📅 " + postedText,
+          "💼 " + job.experience, "🕒 " + job.employment
+        ].forEach(value => {
+            const item = document.createElement("span");
+            item.textContent = value;
+            meta.appendChild(item);
+        });
+
+        const badges = document.createElement("div");
+        badges.className = "badges";
+
+        [job.source, job.language, ...job.cad].forEach((value, index) => {
+            const badge = document.createElement("span");
+            badge.className = "badge" + (index === 0 ? " source-badge" : "");
+            badge.textContent = value;
+            badges.appendChild(badge);
+        });
+
+        const description = document.createElement("p");
+        description.className = "subtitle";
+        description.style.margin = "12px 0 0";
+        description.textContent = job.description;
+
+        const bottom = document.createElement("div");
+        bottom.className = "job-bottom";
+
+        const status = document.createElement("select");
+        status.setAttribute("aria-label", "Application status for " + job.title);
+
+        ["Interested", "Applied", "Interview", "Rejected", "Offer"].forEach(value => {
+            const option = document.createElement("option");
+            option.value = value;
+            option.textContent = "Status: " + value;
+            option.selected = (statuses[job.id] || "Interested") === value;
+            status.appendChild(option);
+        });
+
+        status.addEventListener("change", () => {
+            statuses[job.id] = status.value;
+            persist();
+            render();
+        });
+
+        const actions = document.createElement("div");
+        actions.className = "job-actions";
+
+        const saveButton = document.createElement("button");
+        saveButton.className = "btn" + (saved.includes(job.id) ? " saved" : "");
+        saveButton.textContent = saved.includes(job.id) ? "★ Saved" : "☆ Save";
+        saveButton.addEventListener("click", () => {
+            saved = saved.includes(job.id)
+                ? saved.filter(id => id !== job.id)
+                : [...saved, job.id];
+            persist();
+            render();
+        });
+
+        const applyButton = document.createElement("button");
+        applyButton.className = "btn btn-primary";
+        applyButton.textContent = "View application";
+        applyButton.title = "Demo listing: no real application link is available";
+        applyButton.addEventListener("click", () => {
+            alert("This is a demonstration listing. Real listings and application links will be connected in a later version.");
+        });
+
+        actions.append(saveButton, applyButton);
+        bottom.append(status, actions);
+
+        card.append(top, meta, badges, description, bottom);
+        list.appendChild(card);
+    });
+}
+
+$("searchForm").addEventListener("submit", event => {
+    event.preventDefault();
+    render();
+});
+
+["location", "posted", "experience", "cad", "language",
+ "employment", "source", "savedOnly", "sort"].forEach(id => {
+    $(id).addEventListener("input", render);
+    $(id).addEventListener("change", render);
+});
+
+$("clearFilters").addEventListener("click", () => {
+    $("location").value = "";
+    $("posted").value = "all";
+    $("experience").value = "all";
+    $("cad").value = "all";
+    $("language").value = "all";
+    $("employment").value = "all";
+    $("source").value = "all";
+    $("savedOnly").checked = false;
+    $("search").value = "";
+    $("sort").value = "newest";
+    render();
+});
+
+render();
+</script>
+</body>
+</html>
+```
