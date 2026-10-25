@@ -348,6 +348,28 @@ h1 {
     <a href="index.html">← Back to portfolio</a>
 </header>
 
+<section id="loginPanel" style="max-width:500px;margin:30px auto;padding:24px;background:white;border:1px solid #e3e8ef;border-radius:12px;">
+    <h2>Sign in to your Job Tracker</h2>
+    <p>Sign in to access your personal job listings and application records.</p>
+
+    <form id="loginForm">
+        <label for="loginEmail">Email address</label>
+        <input id="loginEmail" type="email" required
+               autocomplete="email"
+               style="display:block;width:100%;padding:12px;margin:8px 0 16px;">
+
+        <label for="loginPassword">Password</label>
+        <input id="loginPassword" type="password" required
+               autocomplete="current-password"
+               style="display:block;width:100%;padding:12px;margin:8px 0 16px;">
+
+        <button type="submit" class="btn btn-primary">Sign in</button>
+        <button type="button" id="logoutButton" class="btn" hidden>Sign out</button>
+    </form>
+
+    <p id="authMessage" role="status"></p>
+</section>
+    
 <div class="layout">
 
 <aside class="sidebar">
