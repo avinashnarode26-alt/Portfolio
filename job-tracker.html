@@ -945,15 +945,28 @@ h1 {
         const query = searchInput.value.trim().toLowerCase();
         let visibleCount = 0;
 
-        rows.forEach(function (row) {
-            const rowDomain = row.dataset.domain.toLowerCase();
-            const rowText = row.textContent.toLowerCase();
+        const rowDomain = (row.dataset.domain || "").toLowerCase();
+const rowText = row.textContent.toLowerCase();
 
-            const matchesDomain =
-                selectedDomain === "all" || rowDomain === selectedDomain;
+const sectorMappings = {
+    "automotive & mobility": ["automotive", "powertrain", "mobility", "vehicle"],
+    "mechanical & industrial engineering": ["mechanical", "manufacturing", "industrial engineering", "machinery"],
+    "robotics & automation": ["robotics", "automation"],
+    "aerospace & space": ["aerospace", "space", "launch vehicles", "spacecraft"],
+    "hydrogen & fuel cells": ["hydrogen", "fuel cells", "electrolysers"],
+    "energy & clean technology": ["energy", "clean technology", "renewable"],
+    "defence & advanced technology": ["defence", "defense", "advanced technology", "sensors", "laser"],
+    "engineering services & r&d": ["engineering services", "automotive", "manufacturing", "research", "development"]
+};
 
-            const matchesSearch = rowText.includes(query);
-            const visible = matchesDomain && matchesSearch;
+const allowedDomains = sectorMappings[selectedDomain] || [];
+
+const matchesDomain =
+    selectedDomain === "all" ||
+    rowDomain === selectedDomain ||
+    allowedDomains.some(domain => rowDomain.includes(domain));
+
+const matchesSearch = rowText.includes(query);
 
             row.style.display = visible ? "" : "none";
 
