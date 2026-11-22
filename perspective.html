@@ -1,18 +1,18 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-795V2204HM"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
 
-  gtag('config', 'G-795V2204HM');
-</script>
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-795V2204HM"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-795V2204HM');
+  </script>
+
   <title>My Perspective | Avinash Macchindra Narode</title>
   <meta name="description" content="Articles, experiences, and ideas from Avinash Macchindra Narode.">
 
@@ -42,11 +42,9 @@
       font-size: 1.08rem;
     }
 
+    /* Article card */
     .article-card {
-      display: grid;
-      grid-template-columns: minmax(220px, 32%) 1fr;
-      gap: 30px;
-      align-items: stretch;
+      display: block;
       padding: 20px;
       margin: 22px 0;
       border: 1px solid #203047;
@@ -54,31 +52,14 @@
       background: rgba(13, 27, 46, 0.65);
     }
 
-    .article-image {
-      min-height: 230px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      padding: 20px;
-      border: 1px solid #344761;
-      border-radius: 12px;
-      background: #1a2a40;
-      color: #a9bfdc;
-      overflow: hidden;
+    /* Article text is hidden initially */
+    .article-excerpt {
+      display: none;
     }
 
-    .article-image img {
+    /* Show full article when expanded */
+    .article-card.expanded .article-excerpt {
       display: block;
-      width: 100%;
-      height: 100%;
-      min-height: 230px;
-      object-fit: cover;
-      border-radius: 8px;
-    }
-
-    .image-placeholder {
-      line-height: 1.8;
     }
 
     .article-number {
@@ -126,8 +107,11 @@
       margin-bottom: 16px;
     }
 
+    /* Read / Collapse button */
     .read-article {
       display: inline-block;
+      border: 0;
+      cursor: pointer;
       text-decoration: none;
       color: #071426;
       font-weight: 700;
@@ -143,16 +127,6 @@
     @media (max-width: 720px) {
       .perspective-page {
         padding: 35px 16px 60px;
-      }
-
-      .article-card {
-        grid-template-columns: 1fr;
-        gap: 20px;
-        padding: 15px;
-      }
-
-      .article-image {
-        min-height: 200px;
       }
 
       .article-content h2 {
@@ -178,125 +152,296 @@
 
     <!-- ARTICLE 1 -->
     <article class="article-card">
-      <div class="article-image">
-        <!-- Upload an image and replace this placeholder with an img tag -->
-        <div class="image-placeholder">
-          <strong>Upload Image</strong><br>
-          Add your article image here
-        </div>
-      </div>
 
       <div class="article-content">
+
         <span class="article-number">01</span>
+
         <p class="article-meta">Topic 1 · 5 min read</p>
+
         <h2>Topic 1: From Raw Material to Finished Part: My Approach to Mechanical Product Development</h2>
 
         <div class="article-summary">
           <strong>Summary</strong>
-          <p>Developing a mechanical component is more than creating a CAD model. It requires understanding customer requirements, evaluating manufacturing feasibility, selecting appropriate processes, defining tolerances, ensuring quality, and coordinating with different teams. Through my experience in transmission-part development, I have learned how these activities come together to transform an initial requirement into a finished product.</p>
+
+          <p>
+            Developing a mechanical component is more than creating a CAD model.
+            It requires understanding customer requirements, evaluating manufacturing
+            feasibility, selecting appropriate processes, defining tolerances,
+            ensuring quality, and coordinating with different teams. Through my
+            experience in transmission-part development, I have learned how these
+            activities come together to transform an initial requirement into a
+            finished product.
+          </p>
         </div>
 
         <p class="article-excerpt">
-          
-          In the current world, people have multiple options in the market for each product. Each product can vary according to its specifications, features, cost, and convenience. This is possible due to globalisation of the market and technological advancements across the boundaries. Some parts may be manufactured in one country, transferred to a second country for assembly, and then sold in a third country. This type of approach is mostly followed by OEM companies because of the availability of local manufacturing capabilities, government regulations, manufacturing costs, and other factors. It helps companies remain competitive in terms of features, services, and cost while gaining advantages from companies located in different countries. Some of these industries include automotive, aerospace, medical, pharmaceutical, and many others.
-</p>
-<p class="article-excerpt">
-          For me, the automotive industry is also an area of concern. I worked in a Tier-2 company where we manufactured gears and shafts for German automotive customers. This power-transmission part was manufactured for major automotive players such as Audi, Porsche, BMW, and many others across the world. We manufactured parts and assemblies according to different customer requirements, such as ISO, DIN, and ASME standards. My team was specifically focused on German customers, so we followed DIN standards for product development. This included all activities related to product development, from initial studies and documentation to manufacturing, inspection, and delivery of the final finished product to the customer.
-
-</p>
-<p class="article-excerpt">
-  We followed a systematic approach during product development projects. The company received orders from different customers, after which the marketing department initiated the process of checking feasibility, cost, and other requirements. Once everything was satisfactory, my department received the NPD (New Product Development) drawing for further study and execution. Initially, we checked the feasibility of the part, including each feature, dimension, and tolerance limit. Based on this feasibility study, we checked whether the specified tolerances were achievable or not. Sometimes, we proposed tolerance relaxation, changes in dimensions, or alternative manufacturing methods. This included changes such as chamfer dimensions, corner radii, reducing or increasing diameters, and sometimes alternative heat-treatment methods. For example, a particular feature could be manufactured either by hard turning or hard grinding. However, in some cases, a corner radius could make one of these manufacturing methods difficult or unsuitable.
-
-</p>
-<p class="article-excerpt">
-  Once everything was finalised after the feasibility study, we started the documentation, planning, and execution of the project. According to the part size, shape, and feature requirements, we decided the initial workflow, starting from the raw material and continuing through to the delivery of the final product. This workflow included operations such as bar cutting, forging, CNC machining (first and second setups), milling if required, hobbing, shaving, chamfering, heat treatment, honing, hard grinding or hard turning, and inspection.
-
-</p>
-<p class="article-excerpt">
-  This was a PPAP batch (Pre-Production Approval Process), so we prepared all the documentation according to the APQP standards. As part of this process, we provided the required documentation to the customer for each part. If any supplier was involved, they also needed to follow the applicable standards to satisfy the requirements. Major documentation included the initial process flow diagram, control chart, manufacturing drawing, Process FMEA, material inspection report, part inward inspection report, cutting-tool records, tooling details (jigs, fixtures, gauges, mandrels), final inspection report, and other relevant documents.
-
-</p>
-<p class="article-excerpt">
-  I was mainly involved in drawing creation for different manufacturing processes, including CAD modelling, at all manufacturing stages. I created models and drawings by considering machining allowances, draft, GD&T, tolerance annotations, locating, mounting, and holding-position decisions. These parameters were different for each manufacturing method. I was also involved in preparing PFMEA and control charts, which included details about which process would take place in which plant, which parameters would be controlled, how each parameter would be measured, and what type of tooling would be required. Sometimes, we manufactured the part in-house, while in other cases it was manufactured by suppliers. Once the part was machined at each step, I supported quality checks and inspection activities. This inspection depended on the specific requirements, such as checking 100% of the parts or inspecting samples from each batch. We maintained records of the inspection results for quality control. Inspection requirements were also dependent on the manufacturing process, and we used different quality-inspection tools such as profile testers, hardness testers, surface-roughness testers, Vernier calipers, micrometers, different types of gauges, gear-specification measuring machines, and other equipment.
-
-I was also involved in group activities such as deciding tooling requirements, designing gauges, preparing PFMEA, and sometimes visiting suppliers.
-
-</p>
-<p class="article-excerpt">
-  Overall, I would say that the product development of transmission parts such as gears and shafts requires multiple manufacturing processes. At each stage, it is mandatory to satisfy the requirements specified in the drawing and instructions from the control chart to obtain a qualified part. If any process or step is not followed, it may lead to a defective part at the end, which can increase the manufacturing cost. Maintaining documentation for each part and tracking it at every step is also challenging but mandatory for PPAP documentation and process-quality tracking. Sometimes, challenging scenarios can occur that may lead to rework or scrap. However, if corrective actions are taken and the process is checked at regular intervals, these challenges or issues can be minimised.
-
-The development of a new part is a group activity in which each team member is assigned specific tasks during project execution. Follow-up with colleagues is also necessary, along with coordination with different stakeholders and helping others as required to complete the project on time. Therefore, I believe clear communication, timely follow-up, a structured way of working, and a problem-solving attitude help ensure the successful completion of a project.
+          In the current world, people have multiple options in the market for each
+          product. Each product can vary according to its specifications, features,
+          cost, and convenience. This is possible due to globalisation of the market
+          and technological advancements across the boundaries. Some parts may be
+          manufactured in one country, transferred to a second country for assembly,
+          and then sold in a third country. This type of approach is mostly followed
+          by OEM companies because of the availability of local manufacturing
+          capabilities, government regulations, manufacturing costs, and other
+          factors. It helps companies remain competitive in terms of features,
+          services, and cost while gaining advantages from companies located in
+          different countries. Some of these industries include automotive,
+          aerospace, medical, pharmaceutical, and many others.
         </p>
 
-        <a class="read-article" href="article-1.html">Read article →</a>
+        <p class="article-excerpt">
+          For me, the automotive industry is also an area of concern. I worked in
+          a Tier-2 company where we manufactured gears and shafts for German
+          automotive customers. This power-transmission part was manufactured for
+          major automotive players such as Audi, Porsche, BMW, and many others
+          across the world. We manufactured parts and assemblies according to
+          different customer requirements, such as ISO, DIN, and ASME standards.
+          My team was specifically focused on German customers, so we followed
+          DIN standards for product development. This included all activities
+          related to product development, from initial studies and documentation
+          to manufacturing, inspection, and delivery of the final finished product
+          to the customer.
+        </p>
+
+        <p class="article-excerpt">
+          We followed a systematic approach during product development projects.
+          The company received orders from different customers, after which the
+          marketing department initiated the process of checking feasibility,
+          cost, and other requirements. Once everything was satisfactory, my
+          department received the NPD (New Product Development) drawing for
+          further study and execution. Initially, we checked the feasibility of
+          the part, including each feature, dimension, and tolerance limit.
+          Based on this feasibility study, we checked whether the specified
+          tolerances were achievable or not. Sometimes, we proposed tolerance
+          relaxation, changes in dimensions, or alternative manufacturing
+          methods. This included changes such as chamfer dimensions, corner
+          radii, reducing or increasing diameters, and sometimes alternative
+          heat-treatment methods. For example, a particular feature could be
+          manufactured either by hard turning or hard grinding. However, in some
+          cases, a corner radius could make one of these manufacturing methods
+          difficult or unsuitable.
+        </p>
+
+        <p class="article-excerpt">
+          Once everything was finalised after the feasibility study, we started
+          the documentation, planning, and execution of the project. According
+          to the part size, shape, and feature requirements, we decided the
+          initial workflow, starting from the raw material and continuing
+          through to the delivery of the final product. This workflow included
+          operations such as bar cutting, forging, CNC machining (first and
+          second setups), milling if required, hobbing, shaving, chamfering,
+          heat treatment, honing, hard grinding or hard turning, and inspection.
+        </p>
+
+        <p class="article-excerpt">
+          This was a PPAP batch (Pre-Production Approval Process), so we
+          prepared all the documentation according to the APQP standards.
+          As part of this process, we provided the required documentation
+          to the customer for each part. If any supplier was involved, they
+          also needed to follow the applicable standards to satisfy the
+          requirements. Major documentation included the initial process
+          flow diagram, control chart, manufacturing drawing, Process FMEA,
+          material inspection report, part inward inspection report,
+          cutting-tool records, tooling details (jigs, fixtures, gauges,
+          mandrels), final inspection report, and other relevant documents.
+        </p>
+
+        <p class="article-excerpt">
+          I was mainly involved in drawing creation for different manufacturing
+          processes, including CAD modelling, at all manufacturing stages.
+          I created models and drawings by considering machining allowances,
+          draft, GD&T, tolerance annotations, locating, mounting, and
+          holding-position decisions. These parameters were different for
+          each manufacturing method. I was also involved in preparing PFMEA
+          and control charts, which included details about which process
+          would take place in which plant, which parameters would be
+          controlled, how each parameter would be measured, and what type
+          of tooling would be required. Sometimes, we manufactured the part
+          in-house, while in other cases it was manufactured by suppliers.
+          Once the part was machined at each step, I supported quality
+          checks and inspection activities. This inspection depended on
+          the specific requirements, such as checking 100% of the parts
+          or inspecting samples from each batch. We maintained records
+          of the inspection results for quality control. Inspection
+          requirements were also dependent on the manufacturing process,
+          and we used different quality-inspection tools such as profile
+          testers, hardness testers, surface-roughness testers, Vernier
+          calipers, micrometers, different types of gauges,
+          gear-specification measuring machines, and other equipment.
+
+          I was also involved in group activities such as deciding tooling
+          requirements, designing gauges, preparing PFMEA, and sometimes
+          visiting suppliers.
+        </p>
+
+        <p class="article-excerpt">
+          Overall, I would say that the product development of transmission
+          parts such as gears and shafts requires multiple manufacturing
+          processes. At each stage, it is mandatory to satisfy the
+          requirements specified in the drawing and instructions from
+          the control chart to obtain a qualified part. If any process
+          or step is not followed, it may lead to a defective part at
+          the end, which can increase the manufacturing cost. Maintaining
+          documentation for each part and tracking it at every step is
+          also challenging but mandatory for PPAP documentation and
+          process-quality tracking. Sometimes, challenging scenarios
+          can occur that may lead to rework or scrap. However, if
+          corrective actions are taken and the process is checked at
+          regular intervals, these challenges or issues can be minimised.
+
+          The development of a new part is a group activity in which
+          each team member is assigned specific tasks during project
+          execution. Follow-up with colleagues is also necessary,
+          along with coordination with different stakeholders and
+          helping others as required to complete the project on time.
+          Therefore, I believe clear communication, timely follow-up,
+          a structured way of working, and a problem-solving attitude
+          help ensure the successful completion of a project.
+        </p>
+
+        <button class="read-article" type="button">
+          Read article →
+        </button>
+
       </div>
     </article>
 
+
     <!-- ARTICLE 2 -->
     <article class="article-card">
-      <div class="article-image">
-        <div class="image-placeholder">
-          <strong>Upload Image</strong><br>
-          Add your article image here
-        </div>
-      </div>
 
       <div class="article-content">
+
         <span class="article-number">02</span>
+
         <p class="article-meta">Topic 2 · 5 min read</p>
+
         <h2>Topic 2: Selection of Manufacturing Method and CAD</h2>
 
         <div class="article-summary">
           <strong>Summary</strong>
-          <p>The selection of a manufacturing method and the creation of a CAD model are closely connected. A designer must consider the functional, material, mechanical, environmental, safety, and customer requirements of a part before selecting the appropriate manufacturing process. CAD tools help translate these requirements into models, assemblies, and manufacturing drawings while ensuring the design follows the principles of the selected manufacturing method.</p>
+
+          <p>
+            The selection of a manufacturing method and the creation of a CAD
+            model are closely connected. A designer must consider the functional,
+            material, mechanical, environmental, safety, and customer requirements
+            of a part before selecting the appropriate manufacturing process.
+            CAD tools help translate these requirements into models, assemblies,
+            and manufacturing drawings while ensuring the design follows the
+            principles of the selected manufacturing method.
+          </p>
         </div>
 
         <p class="article-excerpt">
-          In my perspective, manufacturing and CAD are two different topics, but combining them makes sense when representing the output of a design. For example, if I have to design a plastic part, I need to consider design principles for plastic components, such as draft angle, material and its properties, thickness, parting line, undercuts, threads, and other features. By considering these factors, I can create a CAD model of the part. The same principles apply to sheet metal, casting, forging, machining, and additive manufacturing. Therefore, it is clear that we should create CAD models according to the intended manufacturing method.
-</p>
-<p class="article-excerpt">
-  CAD software is very advanced and allows us to model parts, create assemblies, and generate manufacturing drawings. Depending on the part and its features, designers can use solid modelling, surface modelling, or a combination of both. Assembly modelling helps us understand how multiple parts are mounted together in the final system or assembly and how they interact with each other. In assembly design, we can apply dimensions and geometrical constraints to define the position and orientation of all parts. Drawings are the tools used to represent how a part looks in a 2D view and to provide manufacturing instructions. These instructions can be presented through dimensions, tolerances, notes, and other details on the drawing. Modern CAD software provides advanced tools that can be used to model parts according to different manufacturing methods.
-</p>
-<p class="article-excerpt">
-For manufacturing any part, different methods can be employed, such as plastic manufacturing, machining, casting, forging, sheet metal manufacturing, or additive manufacturing. The final manufacturing method is selected based on multiple factors, such as functional requirements, customer requirements, mechanical requirements, environmental requirements, safety requirements, legal requirements, and material requirements, including chemical, thermal, and mechanical properties.
-</p>
-<p class="article-excerpt">
-In conclusion, CAD software helps designers represent their ideas in 3D, create assemblies, and generate drawings. However, designers must also select the appropriate manufacturing method according to the requirements mentioned above and apply the relevant design principles while designing the part in CAD.
+          In my perspective, manufacturing and CAD are two different topics,
+          but combining them makes sense when representing the output of a
+          design. For example, if I have to design a plastic part, I need
+          to consider design principles for plastic components, such as
+          draft angle, material and its properties, thickness, parting line,
+          undercuts, threads, and other features. By considering these
+          factors, I can create a CAD model of the part. The same principles
+          apply to sheet metal, casting, forging, machining, and additive
+          manufacturing. Therefore, it is clear that we should create CAD
+          models according to the intended manufacturing method.
         </p>
 
-        <a class="read-article" href="article-2.html">Read article →</a>
+        <p class="article-excerpt">
+          CAD software is very advanced and allows us to model parts,
+          create assemblies, and generate manufacturing drawings. Depending
+          on the part and its features, designers can use solid modelling,
+          surface modelling, or a combination of both. Assembly modelling
+          helps us understand how multiple parts are mounted together in
+          the final system or assembly and how they interact with each
+          other. In assembly design, we can apply dimensions and
+          geometrical constraints to define the position and orientation
+          of all parts. Drawings are the tools used to represent how a
+          part looks in a 2D view and to provide manufacturing instructions.
+          These instructions can be presented through dimensions,
+          tolerances, notes, and other details on the drawing. Modern CAD
+          software provides advanced tools that can be used to model
+          parts according to different manufacturing methods.
+        </p>
+
+        <p class="article-excerpt">
+          For manufacturing any part, different methods can be employed,
+          such as plastic manufacturing, machining, casting, forging,
+          sheet metal manufacturing, or additive manufacturing. The
+          final manufacturing method is selected based on multiple
+          factors, such as functional requirements, customer requirements,
+          mechanical requirements, environmental requirements, safety
+          requirements, legal requirements, and material requirements,
+          including chemical, thermal, and mechanical properties.
+        </p>
+
+        <p class="article-excerpt">
+          In conclusion, CAD software helps designers represent their
+          ideas in 3D, create assemblies, and generate drawings.
+          However, designers must also select the appropriate
+          manufacturing method according to the requirements mentioned
+          above and apply the relevant design principles while
+          designing the part in CAD.
+        </p>
+
+        <button class="read-article" type="button">
+          Read article →
+        </button>
+
       </div>
     </article>
 
+
     <!-- ARTICLE 3 -->
     <article class="article-card">
-      <div class="article-image">
-        <div class="image-placeholder">
-          <strong>Upload Image</strong><br>
-          Add your article image here
-        </div>
-      </div>
 
       <div class="article-content">
+
         <span class="article-number">03</span>
+
         <p class="article-meta">Topic 3 · 5 min read</p>
+
         <h2>Topic 3: Your Article Title Here</h2>
 
         <div class="article-summary">
           <strong>Summary</strong>
-          <p>Write a short summary of your third article here.</p>
+
+          <p>
+            Write a short summary of your third article here.
+          </p>
         </div>
 
         <p class="article-excerpt">
-          Add a short introduction to your third article here. You can
-          replace this placeholder with your own perspective.
+          Add a short introduction to your third article here.
+          You can replace this placeholder with your own perspective.
         </p>
 
-        <a class="read-article" href="article-3.html">Read article →</a>
+        <button class="read-article" type="button">
+          Read article →
+        </button>
+
       </div>
     </article>
 
   </main>
+
+  <!-- Expand / Collapse Articles -->
+  <script>
+    document.querySelectorAll(".article-card").forEach(function (card) {
+
+      const button = card.querySelector(".read-article");
+
+      button.addEventListener("click", function () {
+
+        const expanded = card.classList.toggle("expanded");
+
+        button.textContent = expanded
+          ? "Show less ↑"
+          : "Read article →";
+
+      });
+
+    });
+  </script>
 
 </body>
 </html>
